@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+
+int lastIndex(int arr[] , int n ,int check )
+{   
+    if (n == 0)
+    {
+        return -1 ;
+    }
+    int ans = lastIndex(arr+1, n-1 , check ) ;
+    if (ans == -1)
+    {
+        if (arr[0] == check)
+        {
+            return 0 ;
+        }
+        
+        else{
+            return -1 ;
+        }
+    }
+    
+    return ans+1 ;
+    
+    }
+
+int main()
+{
+
+    int x , arr[100] , check;
+    cout << " Enter the size :" << endl;
+    cin >> x;
+    cout << " Enter the array :" << endl;
+    for (int i = 0; i < x; i++)
+    {
+        cin>>arr[i] ;
+    }
+    cout << " Enter the number :" << endl;
+    cin>>check ;
+   // lastIndex(arr+x,x , check);
+    
+    int output = lastIndex(arr,x , check);
+    cout << "No. of digits are :" << output;
+    return 0;
+}
+ 
+ *************************************************************************************************************************************************************
+ 
+ #include <iostream>
+using namespace std;
+
+
+int lastIndex(int arr[] , int n ,int check )
+{   int count=n-1 ;
+    if (n == 0)
+    {
+        return 0 ;
+    }
+    if (arr[n-1] == check)
+    {   
+        return count ;
+    }
+    count-- ;
+    return lastIndex(arr, n-1 , check ) ;
+    
+    }
+
+int main()
+{
+
+    int x , arr[100] , check;
+    cout << " Enter the size :" << endl;
+    cin >> x;
+    cout << " Enter the array :" << endl;
+    for (int i = 0; i < x; i++)
+    {
+        cin>>arr[i] ;
+    }
+    cout << " Enter the number :" << endl;
+    cin>>check ;
+   // lastIndex(arr+x,x , check);
+    
+    int output = lastIndex(arr,x , check);
+    cout << "No. of digits are :" << output;
+    return 0;
+}

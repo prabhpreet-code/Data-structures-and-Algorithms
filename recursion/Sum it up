@@ -1,0 +1,78 @@
+
+Problem Name: Sum It Up
+Problem Difficulty: 
+Problem Constraints: N <= 15
+1<= A[I] <= 100
+Problem Description:
+You are given an array of numbers and a target number(<b>T</b>) , print all unique combinations in the array whose sum equals the target number <b>T</b>. Note that each number in the array may only be used once in the combination.<br />
+<b>Note:</b>
+<ul>
+<li> All numbers (including target) will be positive integers </li>
+<li> Elements in the combination must be in non-descending order </li>
+<li> There should be no duplicate combinations </b>
+</ul>
+
+Input Format: The first line will contain <b>N</b> indicating the number of  elements in the array.<br />
+The second line will contain space separated <b>N</b> integers , <b>A[i]</b>. <br />
+The third line will contain the target number <b>T</b>.
+
+Sample Input: 7
+10 1 2 7 6 1 5
+8
+Output Format: Print all unique combinations of the numbers satisfying the above constraints in a separate line in lexicographic manner.
+Sample Output: 1 1 6 
+1 2 5 
+1 7 
+2 6 
+
+******************************************************************************************************************************************************************
+
+#include <iostream>
+#include <bits/stdc++.h>
+#include<algorithm>
+#include<set>
+#include<vector>
+using namespace std;
+set<vector<int>> s ;
+
+void findSubsetSum(int arr[] ,vector<int> out ,int  n ,int target , int sum , int ind){
+    if(ind == n){
+        if(sum == target){
+        sort(out.begin() , out.end()) ;
+        s.insert(out) ;
+
+        }
+         return ; 
+    }
+
+    if(sum > target){
+        return ;
+    }
+    out.push_back(arr[ind]) ;
+    findSubsetSum(arr , out , n , target , sum+arr[ind] , ind+1) ;
+    out.pop_back() ;
+    findSubsetSum(arr , out , n , target , sum , ind+1) ;
+}
+int main()
+{
+    int arr[20] , n , target;
+    cin>> n ;
+    for (int i = 0; i < n; i++)
+    {
+        cin>>arr[i] ;
+    }
+    vector<int> out ;
+    cout<<"Enter sum :"<<endl ;
+    cin>>target ;
+    findSubsetSum(arr , out , n , target , 0 , 0) ;
+    for (auto itr = s.begin(); itr != s.end(); itr++)
+    {
+        vector<int> t = *itr ;
+        for (int j = 0; j < t.size(); j++)
+        {
+            cout<<t[j]<<" " ;
+        }
+        cout<<endl ;
+    }
+    
+}

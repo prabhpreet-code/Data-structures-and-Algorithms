@@ -1,0 +1,27 @@
+ More efficient 
+ 
+ #include <iostream>
+#include <bits/stdc++.h>
+#include<algorithm>
+#include<stdio.h>
+using namespace std ;
+
+
+int main()
+{ 
+   int n,ans=0;
+   cout<<"Enter the number" <<endl ;
+   cin>> n ;
+
+ //buildin function  
+   int x = __builtin_popcount(n) ;
+   cout<< x<<endl ;
+ 
+   while (n>0)
+   {
+       n = (n & (n-1)) ;
+       ans++ ;
+   }
+      cout<<ans ;
+    return 0;
+}

@@ -1,0 +1,144 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include<queue>
+#include<vector>
+using namespace std;
+
+//Structure of a Heap
+class Heap{
+    vector<int> v ;//to store the elements and their parents
+    bool isMin ; // min heap or max heap
+    // function for minimum or maximum calculation
+
+    public:
+    // constructor
+    bool compare(int a , int b){
+        if (isMin)
+        {
+            return a<b ;
+        }
+        else{
+            return a>b ;
+        }
+        
+    }
+    Heap(int d = 10 , bool minOrMax = true){
+        //to reserve some place in vector after which push_back will double the memory every time
+        v.reserve(d) ;
+        // push_back first element as -1 to block the place
+        v.push_back(-1) ;
+        isMin = minOrMax ;
+    }
+
+    // push a element in O(logn)
+    void push(int element){
+        v.push_back(element) ;//push to last
+        int idx = v.size() -1 ;//size -1 as first place is blocked
+        int parent = idx/2 ; // parent : for left child 2[i] and right 2[i]+1
+        //index should be more than 1 and check to make it as min heap or max heap
+        while (idx >1 and compare(v[idx] , v[parent]))
+        {   // swap the elements
+            swap(v[idx] , v[parent]) ;
+            // re assign the values
+            idx = parent ;
+            parent = parent/2 ;
+        }   
+    }
+    int front(){
+        return v[1] ;
+    }
+
+    void heapify(int index){
+        int left = 2*index ;
+        int right = left+1 ;
+        int minIndex = index ;
+        int size = v.size()-1 ;
+        if (left <= size and compare(v[left] , v[index]) )
+        {
+            minIndex = left ;
+        }
+        if (right <= size and compare(v[right] , v[minIndex]))
+        {
+            minIndex = right ;
+        }
+        if (minIndex != index)
+        {
+            swap(v[minIndex] , v[index]) ;
+            heapify(minIndex) ;
+        }
+        
+    }
+    void pop(){
+        int size = v.size() -1 ;
+        swap(v[1] , v[size]) ;
+        v.pop_back() ;
+        heapify(1) ;
+    }
+    bool empty(){
+        return v.size() == 1 ;
+    }
+
+    void buildHeapFromArray(vector<int> &v){
+        for (int i = 2; i < v.size(); i++)
+        {
+            int idx = i ;
+            int parent = idx/2 ;
+          
+            while (idx > 1 and compare(v[idx] , v[parent]))
+            {   // swap the elements
+                swap(v[idx] , v[parent]) ;
+                // re assign the values
+                idx = parent ;
+                parent = parent/2 ;
+            }   
+        }
+        
+        
+    }
+};
+
+void heapify(vector<int> &v , int index){
+        Heap h(10 , false) ;
+        int left = 2*index ;
+        int right = left+1 ;
+        int minIndex = index ;
+        int size = v.size()-1 ;
+        if (left <= size and h.compare(v[left] , v[index]) )
+        {
+            minIndex = left ;
+        }
+        if (right <= size and h.compare(v[right] , v[minIndex]))
+        {
+            minIndex = right ;
+        }
+        if (minIndex != index)
+        {
+            swap(v[minIndex] , v[index]) ;
+            heapify(v , minIndex) ;
+        }
+        
+    }
+
+    void buildHeapFromArrayOptimised(vector<int> &v){
+        for (int i = (v.size()-1)/2; i>= 1; i--)//start from first non-leaf node
+        {
+            heapify(v , i) ;
+        }
+        
+    }
+
+ 
+int main(){
+    Heap h(10 , false) ;
+    vector<int> v{-1,10,20,5,6,1,8,9,4} ;
+    buildHeapFromArrayOptimised(v) ;
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout<<v[i]<<" " ;
+    }
+    
+    
+    
+    return 0;
+
+}

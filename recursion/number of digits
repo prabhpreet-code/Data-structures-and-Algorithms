@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+
+int digitsCount(int y)
+{   static int count = 0;
+    if (y > 0)
+    {
+        count++;
+        return digitsCount(y / 10);
+    }
+    else
+    {
+        return count;
+    }
+}
+
+int main()
+{
+
+    int x;
+    cout << " Enter the integer :" << endl;
+    cin >> x;
+    int output = digitsCount(x);
+    cout << "No. of digits are :" << output;
+    return 0;
+}

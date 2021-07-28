@@ -1,0 +1,73 @@
+Application of binary search -- Aggressive cow
+
+A farmer has built a long barn with N stalls. The stalls are placed in a straight manner at positions from x1, x2, ...xN. But his cows (C) are aggressive and don’t want to be near other cows. To prevent cows from hurting each other, he wants to place them in such a way so that the minimum distance between them is as large as possible. What is the largest minimum distance?
+
+Constraints:
+
+    N: 2<=N<=100,000
+    C: 2<=C<=N
+    Xi: 0<=Xi<=1,000,000,000
+Input:
+
+    Line1: Two integers N and C
+    Next N lines: An integer for Xi stall's position
+Example:
+
+    Input: 
+    5 3
+    1 2 4 8 9
+
+    Output:
+    3
+
+***********************************************************************************************************************************************************************
+
+#include<iostream>
+#include<algorithm>
+#include<bits/stdc++.h>
+using namespace std;
+
+bool checkOutcome(int arr[] ,int n ,int cows ,int mid){
+    int lastCow = arr[0], count= 1 ; 
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i]-lastCow >= mid)
+        {
+            lastCow=arr[i] ;
+            count++ ;
+            if (count == cows )
+            {
+                return true ;
+            }
+            
+        }
+        
+    }
+    return false ;
+}
+
+int main(){
+    int arr[]={1,2,4,8,9},n=5 , cows=3 ; 
+    int start=0 ;
+    int end = arr[n-1] - arr[0] ;
+    int ans = 0 ;
+    while (start<=end)
+    {
+        int mid = (start+end)/2  ;
+        bool possibleOutcome = checkOutcome(arr , n , cows , mid) ;
+        if(possibleOutcome)
+        {   
+             ans = mid ;
+             start=mid+1 ;
+        
+        }
+        else{
+            end=mid-1 ;
+        }
+        
+    }
+    
+    cout<<"your no. is :"<<" "<<ans ;
+
+        return 0 ;
+    }

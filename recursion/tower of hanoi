@@ -1,0 +1,23 @@
+#include <iostream>
+
+using namespace std;
+#include <bits/stdc++.h>
+
+void towerOfHanoi(int n, char source, char auxiliary, char destination)
+{
+    if (n == 0)
+    {
+        return;
+    }
+    towerOfHanoi(n - 1, source, destination, auxiliary);
+    cout << source << " " << destination << endl;
+    towerOfHanoi(n - 1, auxiliary, source, destination);
+}
+int main()
+{   int n ;
+    char str= 'A' , str1='B' , str2= 'C';
+    cout<<"Enter the no. of rings :"<<endl ;
+    cin>> n ;
+    towerOfHanoi(n,str, str1 , str2);
+    return 0;
+}

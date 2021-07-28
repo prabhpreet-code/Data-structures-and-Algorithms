@@ -1,0 +1,22 @@
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+   int main()
+{   
+     int arr[]={10,20,20,25,30,40,40} , key;
+     cout<<"Enter the key here :"<< endl  ;
+     cin>>key ;
+     int n = sizeof(arr)/sizeof(arr[0]) ;
+     bool answer = binary_search(arr , arr+n , key) ;
+     cout<<"present:"<<answer<< endl  ;
+
+     auto it = lower_bound(arr , arr+n , key) ;
+     cout<<(it - arr)<<endl ;
+
+     auto it2 = upper_bound(arr , arr+n , key) ;
+     cout<<(it2-arr)<<endl ;
+
+     cout<<"no . of frequencies "<< (it2-it)<<endl ;
+      return 0 ;
+  }

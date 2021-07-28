@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+bool check_number(int arr[] , int size , int check){
+    if(size == 0 ){
+        return false ;
+    }
+    if(arr[0] == check){
+        return true ;
+    }
+    bool result = check_number(arr+1 , size-1 , check) ;
+    return result ;
+
+
+}
+
+int main() {
+    int a, x;
+    cout<<"ENTER YOUR ARRAY SIZE"<< endl ;
+    cin>> a ;
+    cout<<"ENTER THE NO. YOU WANA CHECK"<<endl ;
+    cin>> x ;
+    int *num = new int[a];
+    for(int i =0 ; i < a ; i++){
+        cin>>num[i] ;
+    }
+    bool output = check_number(num , a , x) ;
+    if(output == true ){
+        cout<<"congo you got it...."<<endl;
+    }
+    else{
+        cout<<"Sorry not present "<<endl ;
+    }
+    delete []num ;  
+}

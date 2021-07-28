@@ -1,0 +1,54 @@
+Write a function to generate all possible n pairs of balanced parentheses. 
+
+Examples: 
+
+Input: n=1
+Output: {}
+Explantaion: This the only sequence of balanced 
+parenthesis formed using 1 pair of balanced parenthesis. 
+
+Input : n=2
+Output: 
+{}{}
+{{}}
+Explantaion: This the only two sequences of balanced 
+parenthesis formed using 2 pair of balanced parenthesis. 
+
+**********************************************************************************************************************************************************************
+
+#include<iostream>
+#include<bits/stdc++.h>
+
+using namespace std ;
+
+
+void generatePairs(char str[] , int n , int index , int open , int close  ){
+    if (index == n*2 ){
+       str[index] = '\0';
+        cout<<str<<endl ;
+        return ;
+    }
+    
+    if (open<n)
+    {
+        str[index] = '(' ;
+        generatePairs(str , n , index+1 , open+1 , close) ;
+    }
+    if (close<open)
+    {
+        str[index] = ')' ;
+        generatePairs(str , n , index+1 , open , close+1) ;
+    }
+      
+    return ;
+    
+}
+
+ int main(){
+     int num ;
+     char str[100] ;
+     cout<<"Enter the number of brackets to generate "<<endl ;
+     cin>>num ;
+     generatePairs(str , num , 0 ,0 ,0) ;
+    
+}

@@ -1,0 +1,32 @@
+ /* By this method we can directly print out all the possible subsequences without saving it somewhere 
+    thus , it can save lots of space in our program */
+  
+  
+*************************************************************************************************************************
+  
+  
+  #include <iostream>
+    #include <string>
+    using namespace std;
+
+    void printKeypad(string input, string str = "")
+    {
+
+        if (input.length() == 0)
+        {
+            cout << str << endl;
+            return;
+        }
+        printKeypad(input.substr(1), str);
+        printKeypad(input.substr(1), str + input[0]);
+    }
+
+    int main()
+    {
+        string input , output;
+        cout << "Enter string" << endl;
+        cin >> input;
+        printKeypad(input, output);
+
+        return 0;
+    }

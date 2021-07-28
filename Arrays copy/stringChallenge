@@ -1,0 +1,137 @@
+Given a list of  strings , each consisting of digits and spaces, the number of spaces is the same for each entry, the goal is to implement a variation of a sort command. None of the strings contains consecutive spaces. Also, no string starts with a space nor ends with it. Spaces are used to divide string into columns, which can be used as keys in comparisons.
+
+The program has to support the required parameters:
+
+key: integer denoting the column used as a key in comparisons. The left-most column is denoted by .
+
+reversed: boolean variable indicating whether to reverse the result of comparisons
+
+comparison-type: either lexicographic or numeric. Lexicographic means that we use Lexicographical order where for example . Numeric means that we compare the strings by their numerical values, so . If the comparison type is numeric and numeric values of keys of  and  are equal for , then  is considered strictly smaller than  because it comes first.
+
+Input Format
+
+In the first line, there is a single integer  denoting the number of strings to sort. In the -th of the following  lines there is a string . In the last line, there are  space-separated values, denoting the values of variables , , 
+
+Constraints
+
+None of the strings contains consecutive spaces
+No string starts with a space nor ends with it
+All column values in all the strings are unique
+Output Format
+
+Print exactly  lines. In the -th of them, print the -th string in the resulting order.
+
+Sample Input 0
+
+3
+122
+12
+13
+1 false lexicographic
+Sample Output 0
+
+12
+122
+13
+
+
+***********************************************************************************************************************************************************************
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+string divideTheString(string str , int key){
+    char *s = strtok((char *)str.c_str(), " ") ;
+    while (key>1)
+    {
+        s=strtok(NULL , " ") ;
+        key-- ;
+    }
+    return (string)s ;
+    
+}
+
+int stringToInt(string str2){
+    int p=1 , sum=0;
+    for (int i = str2.length(); i >=0 ; i--)
+    { 
+        sum+= (str2[i]-'0')*p ;
+        p=p*10 ;
+    }
+    return sum ;
+}
+
+bool compareNumeric(pair<string,string> s1 , pair<string,string> s2){
+        string key1,key2 ;
+        key1 = s1.second ;
+        key2 = s2.second ;
+
+        return stringToInt(key1) > stringToInt(key2) ; 
+}
+
+bool compareLexico(pair<string,string> s1 , pair<string,string> s2){
+        string key1,key2 ;
+        key1 = s1.second ;
+        key2 = s2.second ;
+
+        return key1 > key2 ; 
+}
+
+
+int main()
+{   string str[100] , order ;
+    int n , key;
+    bool rev ;
+
+    cout<<"Enter the size "<<endl ;
+    cin>>n ;
+    cin.get();
+    cout<<"Enter elements"<<endl ;
+    for (int i = 0; i < n; i++)
+    {
+        getline(cin,str[i]) ;
+    }
+    cout<<"Please tell the key to which you wanna sort.."<<endl ;
+    cin>>key ;
+    cin.get();
+   // cout<<"Do you wanna reverse the order write true or false"<<endl ;
+  //  cin>>rev ;
+  
+    cout<<"write the way you wanna sort .."<<endl ;
+    getline(cin,order) ;
+    pair<string,string> strpair[100] ;
+    for (int i = 0; i < n; i++)
+    {
+        strpair[i].first = str[i] ;
+        strpair[i].second = divideTheString(str[i] , key) ;
+    }
+    
+    if(order == "numeric"){
+        sort(strpair , strpair+n , compareNumeric ) ;
+    }
+
+    if(order == "lexicographic"){
+        sort(strpair , strpair + n, compareLexico ) ;
+    }
+
+    if (rev)
+    {
+        for (int i = 0; i < n/2; i++)
+        {
+            swap(strpair[i] , strpair[n-i-1]) ;
+        }
+        
+    }
+    
+
+    // for (int i = 0; i < n ; i++)
+    // {
+    //      cout<<strpair[i].first<<endl  ;
+    // }
+ 
+
+    return 0;
+}

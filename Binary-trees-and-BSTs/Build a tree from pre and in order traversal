@@ -1,0 +1,109 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include<queue>
+#include<math.h>
+using namespace std;
+
+//Structure of a single node
+class node{
+    public:
+    int data ;
+    node*right ;
+    node*left ;
+    node(int d){
+        data = d ;
+        right = NULL ;
+        left = NULL ;
+    }
+};
+
+class Pair{
+    public:
+    
+    bool check; // check balanced or not
+    int height ; // calculate the height of a node
+};
+
+// Function to make a tree
+node* buildTree(){
+    int d ; 
+    cin>>d ;
+    if (d == -1)
+    {
+        return NULL ;
+    }
+    node* root = new node(d) ;
+    root->left = buildTree() ;
+    root->right = buildTree() ;
+    return root ;
+    
+}
+
+void bfs(node* root){
+    queue<node*> q ;
+    q.push(root) ;
+    q.push(NULL) ;
+    while (!q.empty())
+    {
+        node* f = q.front() ;
+        if (f == NULL)
+        {   cout<<endl ;
+            q.pop() ;
+            if (!q.empty())
+            {
+                q.push(NULL) ;
+            }
+        }
+        else{
+            cout<<f->data<<" " ;
+            q.pop() ;
+         if (f->left)
+            {
+                q.push(f->left) ;
+            }
+            if (f->right)
+            {
+             q.push(f->right) ;
+            }
+        }
+    }
+    return ;
+}
+
+//build a tree from pre and in order traversal
+node* createTreeFromTraversal(int in[] , int pre[] , int start , int end){
+
+    static int i = 0 ;
+    //base case
+    if (start > end)
+    {
+        return NULL ;
+    }
+    //create a new node
+    node* root = new node(pre[i]) ;
+    int index = -1 ;
+    //linear search
+    for (int j = start; j <= end; j++)
+    {
+        if (in[j] == pre[i])
+        {   index = j ;
+            break ;
+        }
+    }
+    i++ ;
+    //recursive case
+    root->left = createTreeFromTraversal(in , pre , start , index-1);
+    root->right = createTreeFromTraversal(in , pre , index+1 , end ) ;
+    return root ;
+}
+
+int main(){
+   int in[] = {3,2,8,4,1,6,7,5} ;
+   int pre[] = {1,2,3,4,8,5,6,7} ;
+   int start = 0 ;
+   int size = sizeof(in)/sizeof(int) ;
+   node* temp = createTreeFromTraversal(in,pre,start,size-1) ;
+   bfs(temp) ;
+    return 0;
+
+}

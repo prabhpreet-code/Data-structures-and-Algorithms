@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+   int n , arr[100][100] ,m ;
+   cout<<"Enter the rows"<< endl ;
+   cin>> n ;
+   cout<<"Enter the columns"<<endl ;
+   cin>> m ;
+   cout<<"Enter the elements :"<<endl ;
+   int startrow = 0 , startcol=0 , endrow=n-1 , endcol=m-1;
+   for (int i = 0; i < n; i++)
+   {    for(int j=0 ; j<m ; j++){
+            cin>>arr[i][j];
+        }
+   }
+    
+    while(startrow<=endrow && startcol<=endcol){
+        for(int i=startcol ; i<=endcol ; i++ ){
+            cout<<arr[startrow][i]<<" " ;
+        }
+        startrow++ ;
+
+        for (int i = startrow; i <= endrow; i++)
+        {
+            cout<<arr[i][endcol]<<" " ;
+        }
+        endcol-- ;
+ //   if(endrow>startrow){
+        for (int i = endcol; i>=startcol; i--)
+        {
+            cout<<arr[endrow][i]<<" " ;
+        }
+        endrow-- ;
+   // }
+
+  //  if(endcol>startcol){
+        for (int i = endrow; i>= startrow; i--)
+        {
+            cout<<arr[i][startcol]<<" " ;
+        }
+        startcol++ ;
+ //   }
+  }
+     
+    return 0;
+}

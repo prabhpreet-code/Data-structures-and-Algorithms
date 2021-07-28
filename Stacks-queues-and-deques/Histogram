@@ -1,0 +1,68 @@
+Problem Name: HISTOGRAM
+Problem Difficulty: None
+Problem Constraints: 1<=N<=10^6 <br>
+Height of each bar in histogram <= 10^9
+
+Problem Description:
+Find the largest rectangular area possible in a given histogram where the largest rectangle can be made of a number of contiguous bars.<br>
+<img src="https://prismoskills.appspot.com/lessons/Arrays/Histogram.png"/>
+
+Input Format: First line contains a single integer N, denoting the number of bars in th histogram. <br>Next line contains N integers, i<sup>th</sup> of which, denotes the height of i<sup>th</sup> bar in the histogram.
+Sample Input: 5
+1 2 3 4 5
+
+Output Format: Output a single integer denoting the area of the required rectangle.
+Sample Output: 9
+
+****************************************************************************************************************************************************************
+
+#include<iostream>
+#include<bits/stdc++.h>
+#include<stack>
+using namespace std;
+
+int calculateArea(int hologram[] , int size){
+    stack<int> s1 ;
+    int i=0 ;
+    int total_area = 0 ;
+    int temp_area= 0 ;
+    while (i<size)
+    {
+        if (s1.empty() or hologram[i]>= hologram[s1.top()])
+        {
+            s1.push(i) ;
+            i++ ;
+        }
+
+        else{
+            int st = s1.top() ;
+            s1.pop() ;
+            if (s1.empty())
+            {   
+                total_area = hologram[st]*i ;
+            }
+            else{
+                total_area = hologram[st] *(i - s1.top()-1) ;
+            }
+        }
+        if (total_area>temp_area)
+        {
+            
+            temp_area = total_area ;
+        }
+        
+    }
+    
+ return temp_area ;  
+    
+}
+
+int main(){ 
+    
+    int hologram[] = {6 , 2 ,5 , 4 , 5 , 1 , 6} ;
+    int size = sizeof(hologram)/sizeof(int) ;
+    int area =  calculateArea(hologram , size) ;
+    cout<<" max area is  "<<area ;
+              
+    return 0;
+}

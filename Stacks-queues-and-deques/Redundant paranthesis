@@ -1,0 +1,54 @@
+Problem Name: Redundant Parentheses
+Problem Difficulty: None
+Problem Constraints: 1 < t < 100 <br>
+1< expression < 100
+Problem Description:
+You are given an balanced expression. You have to find if it contains duplicate parentheses or not. A set of parentheses are duplicate if same subexpression is surrounded by multiple parenthesis.
+
+Input Format: First line contains integer t as number of test cases. <br>
+Next t lines contains one balanced expression each. 
+Sample Input: 2
+(((a+(b))+(c+d)))
+((a+(b))+(c+d))
+Output Format: Print "Duplicate" if the expression has any redundancy. Else print "Not Duplicates".
+Sample Output: Duplicate
+Not Duplicates
+
+*****************************************************************************************************************************************************************8
+
+#include<iostream>
+#include<stack>
+using namespace std;
+
+int main(){
+
+    string str ;
+    cin>>str ;
+    stack<char> s1 ;
+    bool ans = false ;
+    for (int i = 0; i < str.size(); i++)
+    {   if (str[i] == '(')
+    {
+        s1.push(str[i]) ;
+    }
+    
+        else if (str[i] == '+' or str[i] == '-' or str[i] == '*' or str[i] == '/' ){
+            s1.push(str[i]) ;
+        }
+
+        else if(str[i] == ')'){
+            if (s1.top() == '(')
+            {
+                ans = true ;
+            }
+            while (s1.top() == '+' or s1.top() == '-' or s1.top() == '*' or s1.top() == '/')
+            {
+                s1.pop() ;
+            }
+            s1.pop() ;
+        }
+    
+    }
+     cout<<ans ;
+	return 0;
+}

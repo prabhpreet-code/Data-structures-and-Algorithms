@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+#include <bits/stdc++.h>
+
+  int sum(int n){
+    
+    if(n <=0){
+      return 0 ;
+    }
+    int counter= n % 10  ;
+    int result = counter + sum(n/10) ;
+    return result ;
+}
+
+int main() {
+    int x ;
+    cout<<"Enter the no. :" << endl ;
+    cin>> x ;
+    int output = sum(x) ;
+    cout<<"sum of digits :"<< output ;
+    return 0 ;
+}

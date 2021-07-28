@@ -1,0 +1,92 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class Complex{
+    int real ;
+    int imagine ;
+    public:
+    Complex(){
+        real = 0 ;
+        imagine = 0 ;
+    }
+    Complex(int r ,int i){
+        real = r ;
+        imagine = i ;
+    }
+    Complex(Complex &X){
+        real = X.real ;
+        imagine = X.imagine ;
+    }
+    void setReal(const int c){
+        real = c ;
+    }
+    void setImagine(int const f){
+        imagine = f ;
+    }
+    void getComplex(){
+        if (imagine > 0)
+        {
+            cout<< real<<"+"<<imagine<<"i"<<endl ;
+        }
+        else if(imagine == 0){
+            cout<<0<<endl ;
+        }
+        else{
+            cout<< real<<imagine<<"i"<<endl ;
+        }
+    }
+    //operator overloading
+    void operator+(Complex &X){
+        real+=X.real ;
+        imagine+=X.imagine ;
+    } 
+    void operator-(Complex &X){
+        real-=X.real ;
+        imagine-=X.imagine ;
+    } 
+    void operator!(){
+      imagine *= (-1) ;
+
+    }
+    void operator=(Complex &X){
+        if (real == X.real)
+        {   cout<<endl<<"yes same"<<endl ;
+            
+        }
+        else{
+            cout<<"sorry"<<endl ;
+        }
+        
+    }
+    istream&  operator << (istream& is , Complex &c){
+        int r1 , i1 ;
+        cin>>r1>>i1 ;
+        c.setReal(r1) ;
+        c.setImagine(i1) ;
+    }  
+/*
+    int& operator[](int m){
+        return arr[m] ;
+    }
+    v[i] = 8 ;
+    v[i]+=14 ;
+*/
+};
+
+
+int main()
+{   Complex c(10,-5) ;
+    c.getComplex() ;
+    Complex d(c) ;
+    d.getComplex() ;
+    Complex e ;
+    e.setReal(2) ;
+    e.setImagine(10) ;
+    !e;
+    e.getComplex() ;
+    d = c ;
+    Complex v ;
+    cin>>v ;
+     return 0;
+}

@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+   int n , arr[100] , currentsum=0 , cumsum[100]={0};
+   cout<<"Enter the size :"<< endl ;
+   cin>> n ;
+   cout<<"Enter the elements :"<<endl ;
+   cin>>arr[0] ;
+   cumsum[0] = arr[0] ;
+   for (int i = 1; i < n; i++)
+   {
+       cin>>arr[i] ;
+       cumsum[i] = cumsum[i-1] + arr[i] ;
+   }
+   int left , right ;
+   int maxim= arr[0] ;
+   int cursum ;
+   for(int i = 0 ; i< n ; i++){
+       for(int j=i ; j<n ; j++){
+           cursum = 0 ;
+           cursum=cumsum[j] - arr[i-1] ; 
+            if(cursum>maxim){
+                maxim = cursum ;
+                left = i ;
+                right=j ;
+            }
+       }
+   }
+    cout<<"sum ="<<maxim<<endl ;
+    cout<<"left: "<<left<<endl ;
+    cout<<"right: "<<right<<endl ; 
+    return 0;
+}

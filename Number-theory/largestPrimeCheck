@@ -1,0 +1,76 @@
+To check the given no. is prime or not .
+As per the limitation of sieve of eratosthene we can not find a prime no. more than 10^7 digits so we need to check a bigger number more 
+thans 10^7 digits is prime or not 
+
+
+************************************************************************************************************************************************
+
+#include <iostream>
+#include <bits/stdc++.h>
+#include<vector>
+#include<bitset>
+using namespace std ; 
+
+#define ll long long
+
+    bitset<100005> b ;
+    vector<int> prime ;
+
+void prime_sieve(ll n){
+    
+    b.set() ;
+   
+    for (ll i = 2; i <=n; i++)
+    {
+        if (b[i] == 1)
+        {   prime.push_back(i) ;
+            for (ll j = i*i; j <=n ; j=j+i)
+            {   
+                b[j] = 0 ;
+            }
+            
+        }
+        
+    }
+  
+    b[0]=b[1]=0 ;
+        
+}
+
+bool cal_longPrime(ll No , ll n){
+    
+    prime_sieve(n) ;
+    if (No<=n)
+    {
+        return b[No]==1 ? true:false ;
+    }
+    for (ll i = 0; prime[i]*prime[i] <=No; i++)
+    {
+        if (No % prime[i]== 0)
+        {
+            return false ;
+        }
+        
+    }
+    return true;
+}
+
+int main()
+{   ll No, n=100005 ;
+
+    
+    cout<<"Enter two numbers :"<<endl ;
+    cin>> No ;
+    bool ans = cal_longPrime( No , n) ;
+
+    if(ans){
+        cout<<"It is prime"<<endl ;
+    }
+
+    else{
+        cout<<"sorry no prime"<<endl ;
+    }
+    
+
+    return 0;
+}

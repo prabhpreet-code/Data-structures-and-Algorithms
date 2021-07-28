@@ -1,0 +1,50 @@
+Application of binary search -- Monotonic way of searching a number -- To calculate the square root of a number 
+
+**************************************************************************************************************************************
+
+#include<iostream>
+#include<algorithm>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n , p ; 
+    cout<<"Enter the number :"<<endl ;
+    cin>> n ;
+    cout<<"Enter the decimal point :"<<endl ;
+    cin>> p ;
+    int start = 0 ;
+    int end = n ;
+    float ans  ;
+    while (start<=end)
+    {
+        int mid = (start+end)/2 ;
+        if (mid*mid == n)
+        {
+             ans = mid ;
+        }
+        
+        else if(mid*mid < n){
+            ans = mid ;
+            start = mid+1 ;
+        }
+        else{
+            end = mid - 1 ;
+        }
+    }
+    float inc = 0.1 ;
+    for (int i = 1; i <= p; i++)
+    {
+        while (ans*ans<=n)
+        {
+            ans=ans+inc ;
+        }
+        ans = ans-inc ;
+        inc = inc/10 ;
+    }
+    
+    
+    cout<<"your no. is :"<<" "<<ans ;
+
+        return 0 ;
+    }

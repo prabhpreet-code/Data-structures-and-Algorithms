@@ -1,0 +1,81 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include<queue>
+#include<math.h>
+using namespace std;
+
+//Structure of a single node
+class node{
+    public:
+    int data ;
+    node*right ;
+    node*left ;
+    node(int d){
+        data = d ;
+        right = NULL ;
+        left = NULL ;
+    }
+};
+
+class Pair{
+    public:
+    
+    bool check; // check balanced or not
+    int height ; // calculate the height of a node
+};
+
+// Function to make a tree
+node* buildTree(){
+    int d ; 
+    cin>>d ;
+    if (d == -1)
+    {
+        return NULL ;
+    }
+    node* root = new node(d) ;
+    root->left = buildTree() ;
+    root->right = buildTree() ;
+    return root ;
+    
+}
+
+// find lowest common ancestor
+//assumptions :- that a and b are present inside tree
+node* lca(node* root , int a ,int b){
+    // base case
+    if (root ==NULL)
+    {
+        return NULL ;
+    }
+    //check if a or b is found return the root
+    if (root->data == a or root->data == b)
+    {
+        return root ;
+    }
+    // recursive case
+    node* left = lca(root->left , a , b) ;
+    node* right = lca(root->right , a , b) ;
+    // we have got a and b from left and right both so return ancestor node
+    if (left != NULL and right!=NULL)
+    {
+        return root ;
+    }
+    // we got a or b from left but null from right so return left
+    if (left!=NULL)
+    {
+        return left ;
+    }
+    //or at last we got it from right
+     return right ;
+    
+}
+
+int main(){
+   node*root = buildTree() ;
+   node* target = root ;
+   int a= 1 , b= 7 ;
+   cout<<lca(root , a , b)->data<<" " ;
+   
+    return 0;
+
+}

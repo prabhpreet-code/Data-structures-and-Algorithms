@@ -1,0 +1,55 @@
+#include<iostream>
+#include<bits/stdc++.h>
+#include<stack>
+using namespace std;
+
+void insert(stack<int> &s1 , int x){
+    if (s1.empty())
+    {
+        s1.push(x) ;
+        return ;
+    }
+    int data = s1.top() ;
+    s1.pop() ;
+    insert(s1 , x) ;
+    s1.push(data) ;
+    
+}
+
+void reverse(stack<int> &s1){
+    if (s1.empty())
+    {
+        return ;
+    }
+    int x = s1.top() ;
+    s1.pop() ;
+    reverse(s1) ;
+    insert(s1 , x) ;
+    
+}
+
+int main(){
+    stack<int> s1 ;
+    s1.push(1) ;
+    s1.push(2) ;
+    s1.push(3) ;
+    s1.push(4) ;
+    stack<int> s3 = s1 ;
+    while (!s1.empty())
+    {
+        cout<<s1.top()<<endl ;
+        s1.pop() ;
+    }
+    s1 = s3 ;
+    stack<int> s2 ;
+    int n = s1.size() ;
+    reverse(s1) ;
+    cout<<"After reversing :"<<endl ;
+    while (!s1.empty())
+    {
+        cout<<s1.top()<<endl ;
+        s1.pop() ;
+    }
+       
+    return 0;
+}

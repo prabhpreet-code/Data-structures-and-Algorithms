@@ -1,0 +1,122 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include<queue>
+#include<math.h>
+using namespace std;
+
+//Structure of a single node
+class node{
+    public:
+    int data ;
+    node*right ;
+    node*left ;
+    node(int d){
+        data = d ;
+        right = NULL ;
+        left = NULL ;
+    }
+};
+
+class Pair{
+    public:
+    
+    bool check; // check balanced or not
+    int height ; // calculate the height of a node
+};
+
+
+// breadth first search -- to print the tree in o(N) complexity
+void bfs(node* root){
+    queue<node*> q ;
+    q.push(root) ;
+    q.push(NULL) ;
+    while (!q.empty())
+    {
+        node* f = q.front() ;
+        if (f == NULL)
+        {   cout<<endl ;
+            q.pop() ;
+            if (!q.empty())
+            {
+                q.push(NULL) ;
+            }
+        }
+        else{
+            cout<<f->data<<" " ;
+            q.pop() ;
+         if (f->left)
+            {
+                q.push(f->left) ;
+            }
+            if (f->right)
+            {
+             q.push(f->right) ;
+            }
+        }
+    }
+    return ;
+}
+
+//build binary search tree
+node* insertBinarySearchTree(node* root , int d){
+    //base case
+    //whenever there's null make a new node
+    if (root == NULL)
+    {
+        return new node(d) ;
+    }
+    //check if given data is smaller then root data 
+    //link it with left part of the node
+    if (root->data > d)
+    {
+        root->left = insertBinarySearchTree(root->left , d) ;
+    }
+    //otherwise if bigger than root link it with right side
+    if (root->data < d)
+    {
+        root->right = insertBinarySearchTree(root->right , d) ;
+    }
+    // no condition is met which means it's same as root then return same value
+    return root ;
+}
+
+// Function to make a BST
+node* buildTree(){
+    int d ;
+    cin>>d ;
+    //initialise first node with null
+    node* root = NULL ;
+    //take input until -1 is met
+    while (d != -1)
+    {
+        root = insertBinarySearchTree(root , d) ;
+        cin>>d ;
+    }
+    return root ;
+    
+}
+
+//to print the order in sorted way
+void inOrderPrint(node* root){
+    if (root == NULL)
+    {
+        return ;
+    }
+    //left->root->right
+    //recursive
+    inOrderPrint(root->left);
+    cout<<root->data<<"," ;
+    inOrderPrint(root->right) ;
+    
+}
+
+int main(){
+   node* root = buildTree() ;
+   int a= 1 , b= 7 ;
+   inOrderPrint(root) ;
+   cout<<endl ;
+   bfs(root) ;
+   
+    return 0;
+
+}

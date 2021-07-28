@@ -1,0 +1,30 @@
+Problem Name: Strings-Difference in Ascii Codes
+Problem Difficulty: None
+Problem Constraints: Length of String should be between 2 to 1000.
+Problem Description:
+Take as input S, a string. Write a program that inserts between each pair of characters the difference between their ascii codes and print the ans.
+Input Format: String
+Sample Input: acb
+Output Format: String
+Sample Output: a2c-1b
+
+
+
+*********************************************************************************************************************************************************
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    char str[1000];
+    int str2[2000];
+    cin>>str;
+    int i=1;
+    cout<<str[0];
+    while(str[i]!='\0'){
+        str2[i]=int(str[i])-int(str[i-1]);
+        cout<<str2[i]<<str[i];
+        i++;
+    }
+    return 0;
+}

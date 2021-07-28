@@ -1,0 +1,29 @@
+    #include <iostream>
+using namespace std;
+#include <bits/stdc++.h>
+
+bool help(char a[],int start, int end){
+    
+    if(start >=end )
+        return true;
+    
+    if(a[start]!=a[end])
+        return false;
+   
+    bool smallcheck= help(a,start+1,end-1);
+        return smallcheck;
+}
+
+int main() {
+    char input[50];
+    cin >> input;
+    int cal = strlen(input) -1 ;
+    int start = 0 ;
+    bool output= help(input , start , cal) ;
+    if(output) {
+        cout << "true" << endl;
+    }
+    else {
+        cout << "false" << endl;
+    }
+}

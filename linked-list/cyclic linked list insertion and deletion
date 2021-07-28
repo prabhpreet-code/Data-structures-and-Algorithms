@@ -1,0 +1,112 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+    int data ;
+    node*next ;
+    node(int d){
+        next = NULL ;
+        data = d ;
+    }
+};
+
+void cyclicInsert(node*&head , int data){
+    node* n = new node(data) ;
+    node*temp = head ;
+    n->next = head ;
+    if (temp != NULL)
+    {
+        while (temp->next != head)
+        {
+            temp = temp->next ;
+        }
+        temp->next = n ;
+        
+    }
+    else{
+        n->next=n ;
+    }
+    head = n ;
+}
+
+node* getNode(node*head , int pos){
+   node*temp = head ;
+    while (temp->next != head)
+    {
+        if (temp->data == pos)
+        {
+            return temp ;
+        }
+        temp = temp->next ;
+    }
+    if (temp->data == pos)
+        {
+            return temp ;
+        }
+
+    return NULL ;
+    
+}
+
+void deleteCyclic(node*&head , int pos){
+
+    node* del = getNode(head , pos) ;
+    if (del == NULL)
+    {
+        return ; 
+    }
+    if (del == head)
+    {
+        head = head->next ;
+    }
+    
+    node*temp = head ;
+    while (temp->next != del)
+    {
+        temp=temp->next ;
+    }
+    temp->next = del->next ;
+    delete del ;
+    
+}
+
+node* take_input(){
+    int d ; 
+    cin>>d ;
+    node* head = NULL ;
+    while (d != -1)
+    {
+        cyclicInsert(head , d) ;
+        cin>>d ;
+    }
+    return head ;
+}
+
+
+void print(node* head){
+    node* temp = head ;
+    while (temp->next != head)
+    {
+        cout<<temp->data<<" -> " ;
+        temp = temp->next ;
+    }
+    cout<<temp->data<<endl ;
+    return ;    
+}
+
+int main(){
+    int pos ;
+    node* head = take_input() ;
+    
+    print(head) ;
+
+    cout<<"Enter position to delete"<<endl ;
+    cin>>pos ;
+    deleteCyclic(head , pos) ;
+    print(head) ;
+  
+    
+    return 0;
+}

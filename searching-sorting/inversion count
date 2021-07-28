@@ -1,0 +1,72 @@
+#include <iostream>
+
+using namespace std;
+#include <bits/stdc++.h>
+
+int inversion(int arr[] , int start , int end){
+    int mid = (start + end)/2 ;
+    int i = start ;
+    int j = mid + 1 ;
+    int temp[100] , k = start , count=0;
+    while(i<=mid && j<=end ){
+        if(arr[i]>=arr[j]){
+        count+=mid-(i-1) ;
+        temp[k++] = arr[j++] ;            
+        }
+        else{
+            
+            temp[k++] = arr[i++] ;
+        }
+    }
+
+        while(i<=mid){
+        temp[k++] = arr[i++] ;            
+        }
+        while(j<=end){
+        temp[k++] = arr[j++] ;            
+        }
+
+        for(int i= start ; i<=end; i++){
+            arr[i]=temp[i] ;
+        }
+    
+        return count ;
+
+}
+
+int inversion_count(int arr[] , int start , int end ){
+    
+    if (start>=end)
+    {
+        return 0 ;
+        }
+    
+
+    int mid = (start + end)/2 ;
+    int x = inversion_count(arr , start , mid ) ;
+    int y = inversion_count(arr , mid+1 , end) ;
+    int z = inversion(arr , start , end) ;
+    return x+y+z ;
+    
+}
+
+int main()
+{  int arr[100] ,n ;
+    cout<< "Enter the array size ;"<< endl ;
+    cin>> n ;
+    cout<<"Enter the array :"<<endl ;
+
+    for (int i = 0; i < n; i++)
+    {
+        cin>>arr[i] ;
+    }
+    int start = 0 ;
+    
+   cout<< inversion_count(arr , start , n-1); 
+    
+    // cout<< "output "<< endl ;
+    // for(int i=0; i<n;i++){
+    //     cout<<arr[i]<<" " ;
+    // }
+     return 0;
+}

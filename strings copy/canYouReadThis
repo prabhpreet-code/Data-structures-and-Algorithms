@@ -1,0 +1,47 @@
+ One of the important aspect of object oriented programming is readability of the code. To enhance the readability of code, developers write function and variable names in Camel Case. You are given a string, S, written in Camel Case. FindAllTheWordsContainedInIt.
+Input Format
+
+A single line contains the string.
+Constraints
+
+|S|<=1000
+Output Format
+
+Print words present in the string, in the order in which it appears in the string.
+Sample Input
+
+IAmACompetitiveProgrammer
+
+Sample Output
+
+I
+Am
+A
+Competitive
+Programmer
+ 
+ 
+ 
+ ***********************************************************************************************************************************************************************
+ 
+ #include <iostream>
+ #include <cstring>
+ #include <bits/stdc++.h>
+
+  using namespace std;
+  int main ()
+  { string str = "IAmPrabhpreetSingh" ;
+    
+    int c = str.length() ;
+    for (int i = 0; i < c ; i++)
+    {
+        if (str[i] >='A' && str[i]<='Z')
+        {
+            cout<<"\n" ;
+        }
+        cout<<str[i] ;
+    }
+
+   
+      return 0;
+  }

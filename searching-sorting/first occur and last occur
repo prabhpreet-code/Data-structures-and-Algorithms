@@ -1,0 +1,60 @@
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+
+int first_occurence(int arr[] ,int start , int end , int num){
+        int ans= -1;
+        while (start<=end)
+        {
+            int mid = (start+end)/2 ;
+            if (arr[mid] == num)
+            {   ans=mid ;
+                end = mid-1 ;
+                
+            }
+            else if(arr[mid]>num){
+                end = mid-1 ;
+            }
+            else{
+                start=mid+1 ;
+            }
+        }
+        return ans ;
+        
+}
+
+int last_occurence(int arr[] , int start , int end , int num){
+    int ans= -1;
+        while (start<=end)
+        {
+            int mid = (start+end)/2 ;
+            if (arr[mid] == num)
+            {   ans=mid ;
+                start=mid+1 ; ;
+                
+            }
+            else if(arr[mid]>num){
+                end = mid-1 ;
+            }
+            else{
+                start=mid+1 ;
+            }
+        }
+        return ans ;
+}
+
+int main()
+{   
+     int arr[]={1,2,5,10,20,20,20,50,100,200,500,2000} , num;
+     cout<<"Enter the number to search here :"<< endl  ;
+     cin>>num ;
+     int n = sizeof(arr)/sizeof(arr[0]) ;
+     int start = 0 ;
+     int end = n-1 ;
+     int fs = first_occurence(arr , start , end , num) ;
+     int ls = last_occurence(arr , start , end , num) ;
+     cout<<"First occurence is "<< fs<< endl ;
+     cout<<"Last occurence is :"<< ls << endl ;
+      return 0 ;
+  }

@@ -1,0 +1,22 @@
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+
+bool compare(int a , int b){
+    return  a<=b;
+}
+int main()
+{   
+     int arr[]={1,2,5,10,20,50,100,200,500,2000} , change;
+     cout<<"Enter the money here :"<< endl  ;
+     cin>>change ;
+     int n = sizeof(arr)/sizeof(arr[0]) ;
+     while (change>0){
+     int m = lower_bound(arr , arr+n , change , compare) - arr -1 ;
+     int coin = arr[m] ;
+     cout<< coin<<"," ;
+     change-= coin ;
+    }
+      return 0 ;
+  }

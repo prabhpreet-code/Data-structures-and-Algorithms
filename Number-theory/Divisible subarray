@@ -1,0 +1,73 @@
+Pigeohole principle
+
+Problem Name: DIVISIBLE SUBARRAYS
+Problem Difficulty: None
+Problem Constraints: 1<=T<=10 <br>
+1<=N<=10^5 <br>
+|a<sub>i</sub>|<=10^9
+
+Problem Description:
+You are given N elements, *a<sub>1</sub>,a<sub>2</sub>,a<sub>3</sub>....a<sub>N</sub>*. Find the number of *good* sub-arrays.<br>
+A good sub-array is a sub-array [*a<sub>i</sub>,a<sub>i+1</sub>,a<sub>i+2</sub>....a<sub>j</sub>*] such that (*a<sub>i</sub>+a<sub>i+1</sub>+a<sub>i+2</sub>+....+a<sub>j</sub>*) is divisible by N.
+
+
+<img src="https://image.flaticon.com/icons/svg/339/339692.svg" width=200px>
+
+Input Format: The first line contains the number of test cases T. First line of each test case contains an integer N denoting the number of elements. Second line of each test case contains N integers, a1, a2, a3....aN, where ai denotes the ith element of the array.
+Sample Input: 2
+5
+1 1 1 1 1
+5
+5 5 5 5 5
+
+Output Format: Output a single integer denoting the number of good sub-arrays.
+Sample Output: 1
+15
+
+*************************************************************************************************************************************************************
+#include<bits/stdc++.h>
+#define ll unsigned long long
+using namespace std;
+
+
+int main() {
+	ll int n;
+	
+	int t;
+	cin>>t;
+	while(t>0)
+	{
+	    cin>>n;
+	
+	    int a[n];
+        int sum=0;
+        long long c[n];
+        for(int i=0;i<n;i++)
+            c[i]=0;
+	    for(int i=0;i<n;i++)
+	    {
+	        cin>>a[i];
+	        if(a[i]<0)
+	            a[i]=n-((-a[i])%n);
+	        else
+	            a[i]=a[i]%n;
+	           
+            sum=(sum+a[i])%n;
+            c[sum]++;
+	    
+	    }
+	
+        ll int  val=0;
+        c[0]++;
+        for(ll int i=0;i<n;i++)
+            if(c[i]>=2)
+                val=val +(c[i]*(c[i]-1)/2);
+      
+
+        cout<<val<<endl;
+    
+        t--;
+   
+	}
+
+}

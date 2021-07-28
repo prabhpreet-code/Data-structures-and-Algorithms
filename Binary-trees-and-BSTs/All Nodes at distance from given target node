@@ -1,0 +1,110 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include<queue>
+#include<math.h>
+using namespace std;
+
+//Structure of a single node
+class node{
+    public:
+    int data ;
+    node*right ;
+    node*left ;
+    node(int d){
+        data = d ;
+        right = NULL ;
+        left = NULL ;
+    }
+};
+
+class Pair{
+    public:
+    
+    bool check; // check balanced or not
+    int height ; // calculate the height of a node
+};
+
+// Function to make a tree
+node* buildTree(){
+    int d ; 
+    cin>>d ;
+    if (d == -1)
+    {
+        return NULL ;
+    }
+    node* root = new node(d) ;
+    root->left = buildTree() ;
+    root->right = buildTree() ;
+    return root ;
+    
+}
+
+//print nodes down kth number from target node
+void printKthDistanceDownLevel(node* root , int k){
+    // base case
+    if (root == NULL)
+    {
+        return ;
+    }
+    if (k == 0 )
+    {
+        cout<<root->data<<" " ;
+        return ;
+    }
+    //recursive case
+    printKthDistanceDownLevel(root->left , k-1) ;
+    printKthDistanceDownLevel(root->right , k-1) ;
+    return ;
+}
+
+// print all the nodes from kth distance from target node
+int printAllNodes(node* root , node* target , int k){
+    if (root == NULL)
+    {
+        return -1 ;
+    }
+    // target node is found then print all nodes down k distance
+    if (root == target)
+    {
+        printKthDistanceDownLevel(root , k) ;
+        return 0 ; //move one node upward 
+    }
+    //check if target node is present on left side 
+    int Dl = printAllNodes(root->left , target , k) ;
+    // no -1 means it has found target node
+    if (Dl != -1)
+    {   //check if the k distance is either ancestral node
+        if (Dl+1 == k)
+        {
+            cout<<root->data<<" " ;
+        }
+        //else go to right part and print node(k-2-dl)th distance downward
+        else{
+            printKthDistanceDownLevel(root->right , k-2-Dl) ;
+        }
+        return Dl+1 ;
+    }
+    int Dr = printAllNodes(root->right , target , k) ;
+    if (Dr != -1)
+    {
+        if (Dr+1 == k)
+        {
+            cout<<root->data<<" " ;
+        }
+        else{
+            printKthDistanceDownLevel(root->left , k-2-Dr) ;
+        }
+        return Dr+1 ;
+    }
+    //no target node found 
+    return -1 ;
+}
+
+int main(){
+   node*root = buildTree() ;
+   node* target = root ;
+   int k = 3 ;
+   printAllNodes(root , target , k) ;
+    return 0;
+
+}

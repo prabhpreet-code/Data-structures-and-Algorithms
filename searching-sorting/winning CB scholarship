@@ -1,0 +1,40 @@
+Prateek Bhaiya decided to give 100% scholarships to the needy students by taking an admission test. However in order to avoid any losses at the institute, he came up with a solution. Coding Blocks has N students and M discount coupons. A student will get 100% waiver if he gets X discount coupons.
+However in order to get more discount coupons in addition to those M , Bhaiya decided that some students who perform badly in the admission tests, need to pay additional amount equivalent to Y discount coupons, i.e. good students earn discount coupons and weak students need to pay coupons to get admission.
+Find out the maximum number of students who can get 100% waiver in their admission fees.
+Note : Bhaiya will try his best to give 100% discount to maximum students possible.
+
+
+**********************************************************************************************************************************************************
+
+#include<iostream>
+using namespace std;
+
+bool possible(int n,int m, int x,int y, int ans)
+{
+    if((ans*x) <= m + (n-ans)*y){
+    return true;
+    }
+    else {
+        return false;
+    }
+}
+int binary_search(int n,int m, int x,int y)
+{  int ans=0, s=0, e=n;
+    while(s<=e)
+    {
+		int mid=(s+e)/2;
+        if(possible(n,m,x,y,mid))
+        {ans=max(mid,ans);
+        s=mid+1;}
+       else{
+        e=mid-1;
+       }
+    }
+return ans;
+}
+int main() {
+    int n, m ,x,y;
+    cin>>n>>m>>x>>y;
+    cout<<binary_search(n,m,x,y);
+	return 0;
+}

@@ -1,0 +1,39 @@
+Problem Name: XOR Profit Problem
+Problem Difficulty: 2
+Problem Constraints: l <= r <= 1000
+Problem Description:
+We are given two coins of value x and y. We have to find the maximum of value of a XOR b where x <= a <= b <= y.
+
+Input Format: We are given two integers x and y
+Sample Input: 5
+6
+Output Format: Print the maximum value of a XOR b
+Sample Output: 3
+
+*********************************************************************************************************************************************************
+
+#include <iostream>
+#include<algorithm>
+using namespace std;
+
+int maxXor(int x,int y)
+{
+    int maxXor1=0;
+    int k,l,i,j;
+    for(i=x;i<=y;i++)
+    {
+        for( j=x+1;j<=y;j++)
+        {
+          maxXor1=max(maxXor1,i^j);
+        }
+    }
+    return maxxor1;
+}
+int main()
+{  int x,y;
+   cin>>x>>y;
+    int result=maxXor(x,y);
+    cout<<result<<endl;
+
+    return 0;
+}

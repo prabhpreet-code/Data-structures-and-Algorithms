@@ -1,0 +1,69 @@
+You are provided an array of numbers. You need to  arrange them in a way that yields the largest value.
+
+Input Format: First line contains integer t which is number of test case. <br>
+For each test case, you are given a single integer n in the first line which is the size of array A[] and next line contains n space separated integers denoting the elements of the array A .
+
+Sample Input: 1
+4
+54 546 548 60
+Output Format: Print the largest value.
+
+Sample Output: 6054854654
+
+
+**********************************************************************************************************************************************
+
+#include <iostream>
+#include <string>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+   int n , arr[100] ;
+   string str[100] ;
+   cout<<"Enter the size :"<< endl ;
+   cin>> n ;
+   cout<<"Enter the elements :"<<endl ;
+  
+   for (int i = 0; i < n; i++)
+   {
+       cin>>arr[i] ;
+   }
+
+    for (int i = 0; i < n; i++)
+    {
+        str[i] = to_string(arr[i]) ;
+    }
+    
+
+    for (int i = 0; i < n; i++)
+    {   for (int j = i+1; j < n; j++)
+        {
+            string ij = str[i]+str[j] ;
+            string ji  = str[j]+str[i] ;
+            int ab = stoi(ij) ;
+            int ba= stoi(ji) ;
+            if (ab < ba)
+            {
+                int temp = arr[i] ;
+                arr[i] = arr[i+j] ;
+                arr[i+j] = temp ;
+
+                string temp2 = str[i] ;
+                str[i] = str[i+j] ;
+                str[i+j] = temp2 ;
+            }
+            
+        }
+        
+    }
+    string output=" " ;
+    for (int i = 0; i < n; i++)
+    {
+        output+=str[i] ;
+    }
+    cout<<"output = "<< " "<< output ;
+
+    return 0;
+}

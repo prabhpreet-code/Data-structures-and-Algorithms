@@ -1,0 +1,37 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+
+void removeX(char str[100] , char check , int start=0){
+        if (start == strlen(str))
+        {
+            return ;
+        }
+        if (str[start] == 'x')
+        {   int i ;
+            for ( i = start+1 ; i < strlen(str); i++)
+            {
+                str[i-1] = str[i] ;
+            }
+            str[i-1] = '\0' ;
+            removeX(str , check , start) ;
+        }
+        else{
+        removeX(str , check , start+1) ;
+        }
+        return ;        
+}
+
+int main()
+{
+    char str[100] , check ;
+    cout<<"Enter string "<<endl ;
+    cin>>str ;
+    cout<<"Enter element to remove"<<endl ;
+    cin>>check ;
+    removeX(str , check) ;
+    cout<<str<<" " ;
+    
+    return 0;
+}
+ 

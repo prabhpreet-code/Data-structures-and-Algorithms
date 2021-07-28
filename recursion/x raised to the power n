@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+int power(int base , int power1){
+    if(power1 != 0){
+        return (base * power(base,power1-1)) ;
+    }
+    else{
+        return 1 ;
+    }
+}
+
+
+int main(){
+    
+    int x, n ;
+    cout<<" Enter the base :"<<endl ;
+    cin>> x ;
+    cout<<"Enter the power:"<<endl ;
+    cin>>n ;
+
+    int output = power(x , n) ;
+    cout<<"Your Output is :"<<output ;    
+
+    return 0 ;
+}
+
+*****************************************************************************************************************************************************************
+
+EFFICIENT WAY
+
+#include<iostream>
+
+using namespace std ;
+
+int power(int a , int n){
+   if (n==0)
+   {
+       return 1 ;
+   }
+   int ans=power(a , n/2) ;
+   ans=ans*ans ;
+   if (n&1)
+   {
+       return a*ans ;
+   }
+   
+    return ans;
+    
+    
+}
+
+int main(){
+    int n ,a;
+    cin>>a>>n ; 
+   
+    cout<<power(a,n)<<endl ;
+    
+    
+    return 0;    
+    }

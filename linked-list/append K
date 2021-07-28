@@ -1,0 +1,106 @@
+Problem Name: Linked List-K Append
+Problem Difficulty: None
+Problem Constraints: 1 <= N <= 10^4 <br>
+1 <= K <= 10^4 <br>
+Problem Description:
+Given a linked list of length N and an integer K , append the last K elements of a linked list to the front. Note that K can be greater than N.
+
+Input Format: First line contains a single integer N denoting the size of the linked list.<br>
+Second line contains N space separated integers denoting the elements of the linked list.<br>
+Third line contains a single integer K denoting the number of elements that are to be appended.
+Sample Input: 7
+1 2 2 1 8 5 6
+3
+Output Format: Display all the elements in the modified linked list.
+Sample Output: 8 5 6 1 2 2 1
+
+
+*********************************************************************************************************************************************************************
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+    int data ;
+    node*next ;
+    node(int d){
+        next = NULL ;
+        data = d ;
+    }
+};
+
+void insertAtHead(node* &head , int d){
+    if (head == NULL)
+    {
+        head = new node(d) ;    
+        return ;  
+    }
+    node*n = new node(d) ;
+    n->next=head ;
+    head = n ;
+}
+
+
+
+void findKthElement(node* head , int pos , node*&tempo ){
+    static int i =1 ;
+    if (head == NULL or head->next == NULL)
+    {
+        return ;
+    }
+    findKthElement(head->next , pos , tempo ) ;
+    ++i ;
+    if (i == pos)
+    {
+        cout<<head->data<<endl ;
+        tempo = head ;
+    
+    }
+    
+    
+}
+
+void reverseLinkedByK(node* &head , int k , node*&tempo ){
+    findKthElement(head , k , tempo) ;
+    
+    node*temp = head ;
+    while (temp->next != tempo)
+    {
+        temp=temp->next ;
+    }
+    node*c = tempo ;
+    temp->next = NULL ;
+    while (c->next != NULL)
+    {
+        c=c->next ;
+    }
+    c->next = head ;
+    head = tempo ;
+    
+}
+
+node* take_input(){
+    int d ; 
+    cin>>d ;
+    node* head = NULL ;
+    while (d != -1)
+    {
+        insertAtHead(head , d) ;
+        cin>>d ;
+    }
+    return head ;
+}
+
+int main(){
+    node* head = take_input() ;
+    print(head) ;
+    int k = 3 ;
+    node*tempo= NULL ;
+     reverseLinkedByK(head , k , tempo) ;
+
+    print(head) ;   
+    
+    return 0;
+}

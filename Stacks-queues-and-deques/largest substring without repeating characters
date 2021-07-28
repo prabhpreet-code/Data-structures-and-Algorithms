@@ -1,0 +1,27 @@
+input : abcbc
+output: 3
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main(){
+    int start = -1 ;
+    string str ;
+    cin>>str ;
+    int n = str.size() ;
+    vector<int> v1(256 , -1) ;
+    int res = 0 ;
+    for (int i = 0; i < n; i++)
+    {
+        if (v1[str[i]] > start)
+        {
+            start = v1[str[i]] ;        
+        }
+        v1[str[i]] = i ;
+        res = max(res , i-start) ;
+    }
+    cout<<res ;    
+	return 0;
+}

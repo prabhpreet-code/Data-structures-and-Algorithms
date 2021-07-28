@@ -1,0 +1,30 @@
+ #include <iostream>
+ #include <string>
+ #include <bits/stdc++.h>
+
+  using namespace std;
+  int main ()
+  { char str[]="hellooo world" , result;
+    int feq[26] = {0} ;
+    
+    for (int i = 0; i < strlen(str) ; i++)
+    {
+        feq[str[i] - 'a']++ ;
+    }
+
+    int max =-1 ;
+    for (int i = 0; i < 26; i++)
+    {
+        if (max < feq[i])
+        {
+            max = feq[i] ;
+            result = (char)(i + 'a') ;
+            cout<<"res"<<result<<endl ;
+        }
+        
+    }
+    
+    cout<<"answer = "<< result ;
+      
+      return 0;
+  }

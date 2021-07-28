@@ -1,0 +1,81 @@
+Sieve of eratosthenes -- limitation that it can calculate till 10^7 only
+
+Problem Name: Prime Visits
+Problem Difficulty: 1
+Problem Constraints: a<=1000000 & b<=1000000. <br>
+N<=1000
+
+Problem Description:
+PMO gives two random numbers a & b to the Prime Minister. PM Modi wants to visit all countries between a and b (inclusive) , However due to shortage of time he can't visit each and every country , So PM Modi decides to visit only those countries,for which country number has two divisors. So your task is to find number of countries Mr. Modi will visit.
+
+Input Format: The first line contains N , no of test cases. The next N lines contain two integers a and b denoting the range of country numbers.
+Sample Input: 2
+1 10
+11 20
+Output Format: Output contains N lines each containing an answer for the test case.
+Sample Output: 4
+4
+
+*****************************************************************************************************************************************************************************
+
+#include <iostream>
+#include <bits/stdc++.h>
+#include<algorithm>
+#include<cstring>
+using namespace std ; 
+
+#define ll long long
+
+void prime_sieve(int prime[] ,int a ,int b){
+    for (ll i = 3; i <= 100005; i+=2)
+    {
+        prime[i] = 1 ;
+    }
+
+    for (ll i = 3; i <=100005; i+=2)
+    {
+        if (prime[i] == 1)
+        {
+            for (ll j = i*i; j <=100005 ; j=j+i)
+            {
+                prime[j] = 0 ;
+            }
+            
+        }
+        
+    }
+    prime[2] = 1 ;
+    prime[0]=prime[1]=0 ;
+    int count = 0 ;
+    for (int i = a; i <=b; i++)
+    {
+        if (prime[i] ==1)
+        {
+            count++ ;
+        }
+        
+    }
+    cout<<count<<endl ;
+    
+}
+
+int main()
+{   int a , b ;
+    int prime[100005] = {0} ;
+    cout<<"Enter two numbers :"<<endl ;
+    cin>> a>> b ;
+    prime_sieve(prime , a , b) ;
+    
+    
+    // ll csum[100005] = {0} ;
+    // for (ll i = 1; i <= 100005; i++)
+    // {
+    //     csum[i] =  csum[i-1]+prime[i] ;
+    // }
+
+	// 	    cout<<csum[b]-csum[a-1]<<endl ; 
+    
+
+    return 0;
+}
+

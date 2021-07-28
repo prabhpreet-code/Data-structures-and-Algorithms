@@ -1,0 +1,28 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+
+void permute(char str[] , int i=0){
+    if (str[i] == '\0')
+    {
+        cout<<str<<" , " ;
+        return ;
+    }
+    
+    for (int j = i; j < strlen(str); j++)
+    {
+        swap(str[i] , str[j]) ;
+        permute(str , i+1) ;
+        swap(str[i] , str[j]) ;
+    }
+    
+}
+
+int main()
+{  char str[100] ;
+    cin>>str ;
+    
+    permute(str) ;
+    
+    return 0;
+}

@@ -1,0 +1,119 @@
+  #include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+/*
+class Student
+{
+    int roll_no;
+    string name;
+    int class_name;
+
+public:
+    Student()
+    {
+        cout << "hello sahej here" << endl;
+    }
+    Student(int rollNo, string Name, int className)
+    {
+        roll_no = rollNo;
+        name = Name;
+        class_name = className;
+    }
+    Student(Student &x){
+        roll_no = x.roll_no;
+        name = x.name;
+        class_name = x.class_name;
+    }
+    void setters()
+    {
+        name = "prabhpreet singh";
+        roll_no = 20;
+        class_name = 1;
+    }
+    void showStudents()
+    {
+        cout << roll_no << endl
+             << name << endl
+             << class_name << endl;
+    }
+    void setStudent(string Name){
+        name = Name ;
+    }
+};
+*/
+class Car{
+    public:
+    int car_no ;
+    string name ;
+    char *company ;
+    Car(){
+        name = "anonymous" ;
+        company = NULL ;
+    }
+    Car(int carNo , string n , char* x){
+        car_no = carNo ;
+        name = n ;
+        company = new char[strlen(x) +1 ] ;
+        strcpy(company , x) ;
+
+    }
+    //copy assignment
+    void operator=(Car &X){
+        name = X.name ;
+        car_no = X.car_no ;
+    }
+    void showElement(){
+        cout<<"name "<<name<<endl<<"car number "<<car_no<<endl ;
+    }
+    //destructor
+    ~Car(){
+        cout<<"program ended" ;
+        if (company != NULL )
+        {
+            delete [] company ;
+        }
+        
+    }
+};
+int main()
+{/*
+    Student c;
+    Student d(222, "dil", 99);
+    d.showStudents();
+    Student e(d) ;
+    e.setStudent("diloo") ;
+    cout<<endl<<"e constructor"<<endl ;
+    e.showStudents();
+    cout<<endl<<"d constructor"<<endl ;
+    d.showStudents();
+    // c.name[0] = 'A' ;
+    // c.name[1] = '\0' ;
+    // c.roll_no = 20 ;
+    // c.class_name = 1 ;
+    c.setters();
+    c.showStudents();
+    char m[20] ;
+    strcpy(m,"hello") ;
+    cout<<endl<<m<<endl ;
+    */
+   Car e(222,"prabhpreet","hello") ;
+   cout<<endl<<"e cons"<<endl ;
+   e.showElement() ;
+   Car c ;
+   cout<<endl<<"c cons"<<endl ;
+   c.showElement() ;
+   Car d;
+   d = e ;
+   cout<<endl<<"d cons"<<endl ;
+   d.showElement() ;
+   cout<<endl<<"e cons"<<endl ;
+   e.name = "hello world" ;
+   e.showElement() ;
+   //dynamically alocatted object
+   Car *f = new Car(333 , "sahej" , "helloozzz") ;
+   (*f).showElement() ;
+   delete f ; 
+ //  (*f).showElement() ;
+    return 0;
+}

@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+ int stairCase(int input){
+     if(input == 0 || input == 1){
+         return 1 ;
+     }
+
+     if(input==2){
+         return 2 ;
+     }
+     int c = stairCase(input-1) + stairCase(input-2) + stairCase(input-3) ;
+     return c ;
+ }
+
+int main()
+{
+    int input;
+    cout << "Enter the number:" << endl;
+    cin>>input ;
+   int output = stairCase(input) ;
+    cout<<output ;
+    return 0;
+}

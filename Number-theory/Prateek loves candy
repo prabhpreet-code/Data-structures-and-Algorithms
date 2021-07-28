@@ -1,0 +1,67 @@
+
+Problem Name: Prateek Loves Candy
+Problem Difficulty: 1
+Problem Constraints: T <= 10000
+
+It is guaranteed that the answer does not exceed 10^6.
+Problem Description:
+Prateek recently graduated from college. To celebrate, he went to a candy shop and bought all the candies. The total cost was a number upto which there are n prime numbers (starting from 2).                                                                                                                                                                                                                                                    Since Prateek wants to minimize his cost, he calls you to help him find the minimum amount that needs to be paid. Being a student of Prateek bhaiya it is now your job to help him out :)
+
+
+
+Input Format: First line contains a single integer denoting the number of test cases T.
+Next T lines contains a single integer N, denoting the number of primes required.
+Sample Input: 2
+5
+1
+Output Format: Print the minimum cost that needs to be paid.
+Sample Output: 11
+2
+
+
+
+***********************************************************************************************************************************************************
+
+    #include <iostream>
+    #include<vector>
+    using namespace std;
+    #define ll long long
+
+    vector<int> primes ;
+    int arr[1000000] ;
+
+    void sieve(ll n ){
+
+        for (ll i = 3; i < n; i+=2)
+        {
+            arr[i] = 1 ;
+        }
+        primes.push_back(2) ;
+        for (ll i = 3; i < n; i++)
+        {
+            if (arr[i] == 1)
+            {   primes.push_back(i) ;
+                for (ll j = i*i; j < n; j+=i)
+                {
+                    arr[j] = 0 ;
+                }
+                
+            }
+            
+        }
+        arr[0] = 0 ;
+        arr[1] = 0 ;
+        arr[2] = 1 ;
+
+    }
+
+    int main()
+    {   ll a , N=1000000;
+        cout<<"Enter the number:"<<endl ;
+        cin>>a ;
+        sieve(N) ;
+        cout<<primes[a-1]<<endl ;
+        
+        
+        return 0;
+    }

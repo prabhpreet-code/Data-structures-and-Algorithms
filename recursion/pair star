@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+#include <bits/stdc++.h>
+
+void stringConverter(char str[] , int n , int start = 0){
+    if(str[start]== '\0'){
+        return ;
+    }
+
+    if(str[start] == str[start + 1]){
+      str[n+1] = '\0' ;
+      int i ;
+        for( i = n-1 ; i>start ; i--){
+            str[i+1] = str[i] ;
+        }
+        str[start+1] = '*' ;
+
+    }
+    stringConverter(str , n , start+1) ;
+
+}
+
+int main()
+{
+    char str[20] ;
+    cin.getline(str,20) ;
+    int size = strlen(str) ;
+    stringConverter(str , size) ;
+    cout<<str ;
+    return 0 ;
+}

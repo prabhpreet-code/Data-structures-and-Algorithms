@@ -1,0 +1,72 @@
+To count total number of divisors of a given number
+input: 60
+output:12
+***********************************************************************************************************************************************************
+
+#include <iostream>
+#include <bits/stdc++.h>
+#include<vector>
+#include<bitset>
+using namespace std ; 
+
+#define ll long long
+
+    bitset<100005> b ;
+    vector<int> prime ;
+
+void prime_sieve(ll No){
+    
+    b.set() ;
+   
+    for (ll i = 2; i <=No; i++)
+    {
+        if (b[i] == 1)
+        {   prime.push_back(i) ;
+            for (ll j = i*i; j <=No ; j=j+i)
+            {   
+                b[j] = 0 ;
+            }
+            
+        }
+        
+    }
+  
+    b[0]=b[1]=0 ;
+        
+}
+
+
+int main()
+{   ll m , No=100000 ;
+    cout<<"Enter the number"<<endl ;
+    cin>>m ;
+    prime_sieve(No) ;
+    vector<int> factor ;
+    int  i = 0 ;
+    int p = prime[0] ;
+    int ans =1 ;
+    while (p*p <= m)
+    {   int count=0 ;
+        if (m%p == 0)
+        {   
+          
+            while (m%p ==0)
+            {   count++ ;
+                m=m/p ;
+            }
+            
+        }
+        ans=ans*(count+1) ;
+        i++ ;
+        p=prime[i] ;
+    }
+
+    if (m != 1)
+    {
+        ans=ans*2 ;
+    }
+    cout<<ans<<" "<<endl ; 
+    
+     
+        return 0;
+}

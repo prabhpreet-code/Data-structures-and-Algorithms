@@ -1,0 +1,119 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+    int data ;
+    node*next ;
+    node(int d){
+        next = NULL ;
+        data = d ;
+    }
+};
+
+void insertAtHead(node* &head , int d){
+    if (head == NULL)
+    {
+        head = new node(d) ;    
+        return ;  
+    }
+    node*n = new node(d) ;
+    n->next=head ;
+    head = n ;
+}
+
+
+
+void print(node* head){
+    while (head != NULL)
+    {
+        cout<<head->data<<" -> " ;
+        head = head->next ;
+    }
+    cout<<endl ;
+}
+
+// runner technique
+node* midPoint(node*head){
+    if (head == NULL or head->next == NULL)
+    {
+        return head ;
+    }
+    
+    node*fast = head->next ;
+    node*slow = head ;
+    while (fast != NULL and fast->next != NULL)
+    {
+        fast = fast->next->next ;
+        slow= slow->next ;
+    }
+    return slow ;
+    
+
+}
+
+node* mergeNodes(node* a , node* b){
+    if (a == NULL )
+    {
+        return b ;
+    }
+     if (b == NULL )
+    {
+        return a;
+    }
+    
+    
+    node*c ;
+    if (a->data < b->data)
+    {
+        c= a ;
+        c->next = mergeNodes(a->next , b) ;
+    }
+    else
+    {
+        c= b ;
+        c->next = mergeNodes(a, b->next) ;
+    }
+    return c ;
+}
+
+node* take_input(){
+    int d ; 
+    cin>>d ;
+    node* head = NULL ;
+    while (d != -1)
+    {
+        insertAtHead(head , d) ;
+        cin>>d ;
+    }
+    return head ;
+}
+
+node* mergeSort(node* head){
+    if (head == NULL or head->next == NULL)
+    {
+        return head;
+    }
+    node* midpoint = midPoint(head) ;
+    node*a = head ;
+    node*b = midpoint->next ;
+    midpoint->next = NULL ;
+    a = mergeSort(a) ;
+    b = mergeSort(b) ;
+    node*c = mergeNodes(a , b) ;
+    return c ;
+}
+
+int main(){
+   
+    node* head = take_input() ;
+ //   node* head2 = take_input() ;
+    print(head) ;
+    
+   node* c =  mergeSort(head) ;
+   print(c) ;
+   
+    
+    return 0;
+}

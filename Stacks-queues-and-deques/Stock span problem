@@ -1,0 +1,42 @@
+#include<iostream>
+#include<bits/stdc++.h>
+#include<stack>
+using namespace std;
+
+void stockSpan(int prices[] , int span[] , int size){
+    stack<int> s1 ;
+    span[0] = 1 ;
+    s1.push(0) ;
+    for (int i = 1; i <=size-1; i++)
+    {   int current = prices[i] ;
+        while (current >= prices[s1.top()] and !s1.empty())
+        {
+            s1.pop() ;
+        }
+        if (!s1.empty())
+        {
+            int previous = i - s1.top() ;
+            span[i] =previous ;
+
+        }
+        else{
+            span[i] = i+1 ;
+        }
+         s1.push(i) ;
+    }
+   
+    
+}
+
+int main(){ 
+    int span[1000] = {0} ;
+    int prices[] = {100 , 80 , 60 , 70 ,60 , 75 , 85} ;
+    int size = sizeof(prices)/sizeof(prices[0]) ;
+    stockSpan(prices , span , size) ;
+    for (int i = 0; i < 7; i++)
+    {
+        cout<<span[i]<<endl ;
+    }
+              
+    return 0;
+}

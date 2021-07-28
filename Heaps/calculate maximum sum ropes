@@ -1,0 +1,30 @@
+#include <iostream>
+#include<string>
+#include<queue>
+
+using namespace std;
+
+int calculateMaximumSumRopes(int ropes[] , int n){
+    priority_queue<int , vector<int>, greater<int>> pq(ropes , ropes+n) ; // min heap with assigning the value of ropes array in it
+    int sum = 0 ;
+    //till heap becomes empty
+    while (pq.size() > 1)
+    {   //first element
+        int a = pq.top() ;
+        pq.pop() ;//remove it
+        int b = pq.top() ;//second element
+        pq.pop() ;//remove it
+        int c = a+b ;//add them
+        sum += c ;//add in whole sum
+        pq.push(c) ;//put the added one into the heap
+    }
+    //always there will be the minimum ones at the top as per heap property
+    return sum ;
+}
+
+int main()
+{   int ropes[] = {4,3,2,6};
+    int n = 4;
+    cout<<calculateMaximumSumRopes(ropes , n ) ;
+    return 0;
+}

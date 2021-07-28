@@ -1,0 +1,83 @@
+#include <iostream>
+#include<cmath>
+using namespace std;
+
+bool canPlace(int nQueen[][4],int i,int j , int n){
+     for (int k = 0; k < n; k++)
+    {
+        if (nQueen[k][j] == 1)
+        {
+                return false ;
+        }
+        
+    }
+    int m = i ;
+    int q = j ;
+    while (m>=0 && q>=0 )
+    {
+        if (nQueen[m][q] == 1)
+        {
+            return false ;
+        }
+        m-- ;
+        q-- ;
+    }
+
+    m = i ;
+    q = j ;
+    while (m>=0 && q<n )
+    {
+        if (nQueen[m][q] == 1)
+        {
+            return false ;
+        }
+        m-- ;
+        q++ ;
+    }
+    
+         
+     return true;
+}
+
+bool solvenQueen(int nQueen[][4],int i,int n , int &an){
+    //base case
+    if(i==n){
+        an++ ;
+        cout<<endl ;
+        cout<<endl ;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                cout<<nQueen[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+     
+     return false;
+    }
+    
+     for(int j=0;j<n;j++)
+     {
+        if(canPlace(nQueen,i,j,n)){
+            nQueen[i][j]=1;
+
+            if(solvenQueen(nQueen,i+1,n , an)){
+                return true;
+            }
+            nQueen[i][j]=0;
+        }
+    }
+    
+    return false;
+   
+    
+}
+
+int main() {
+    int n;
+    cin>>n;
+    int nQueen[4][4]={0};
+    int ans = 0 ;
+    solvenQueen(nQueen,0,n , ans);
+    cout<<endl<<ans ;
+    return 0;
+}

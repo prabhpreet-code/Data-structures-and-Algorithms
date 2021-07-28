@@ -1,0 +1,39 @@
+input: 10010001 --N
+       1 -- i
+       3 -- j
+       101 -- M
+output : 10011011
+
+*****************************************************************************************************************************************************************
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std ;
+
+
+int clearBitsItoJ(int n , int i , int j){
+    int a = (-1 << (j+1)) ;
+    int b = (1<<i) - 1 ;
+    int mask = a|b ;
+    return n&mask ;
+}
+
+int mergeBit(int n , int i , int j , int m){
+    int mask = clearBitsItoJ(n , i , j) ;
+    return mask | (m<<i) ;
+}
+
+int main()
+{ 
+   int i,j,n,m;
+   cout<<"Enter the number" <<endl ;
+   cin>> n ;
+    
+   cout<<"Enter the range bit u wanna insert"<<endl ;
+   cin>> i>>j ;
+    cout<<"Enter the bits to insert into previous one"<<endl ;
+    cin>>m ;
+    int ans = mergeBit(n , i ,j , m) ;
+   cout<<ans ;
+    return 0;
+}

@@ -1,0 +1,76 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+//Structure of a single node
+class node{
+    public:
+    int data ;
+    node*right ;
+    node*left ;
+    node(int d){
+        data = d ;
+        right = NULL ;
+        left = NULL ;
+    }
+};
+
+// Function to make a tree
+node* buildTree(){
+    int d ; 
+    cin>>d ;
+    if (d == -1)
+    {
+        return NULL ;
+    }
+    node* root = new node(d) ;
+    root->left = buildTree() ;
+    root->right = buildTree() ;
+    return root ;
+    
+}
+//determine the height of the tree
+int heightOfNode(node* root){
+    if (root == NULL)
+    {
+        return 0 ;
+    }
+    int lt = heightOfNode(root->left) ;
+    int rt = heightOfNode(root->right) ;
+    return max(lt , rt) +1 ;
+}
+
+//print the elements of kth node
+void printLevelOrder(node* root , int k){
+    if (root == NULL)
+    {
+        return ;
+    }
+    if (k == 1)
+    {
+        cout<<root->data<<" " ;
+        return ;
+    }
+    printLevelOrder(root->left , k-1) ;
+    printLevelOrder(root->right , k-1) ;
+}
+
+//print all nodes of a tree
+void printAllLevels(node* root){
+    int h = heightOfNode(root) ;
+    for (int i = 1; i <= h; i++)
+    {
+        printLevelOrder(root , i) ;
+        cout<<endl ;
+    }
+    
+}
+int main(){
+    int k ;
+   node* root = buildTree() ;
+   //find out the height of the tree
+   int height = heightOfNode(root) ;
+   //print whole tree
+   printAllLevels(root) ;
+    return 0;
+}

@@ -1,0 +1,224 @@
+
+
+Problem Name: LL - k Reverse
+Problem Difficulty: 2
+Problem Constraints: 0 <= N <= 10^6
+0 <= K <= 10^6
+Problem Description:
+Given a **head** to Linked List **L**, write a function to reverse the list taking **k** elements at a time. Assume **k** is a factor of the size of List.
+
+You need not have to create a new list. Just reverse the old one using **head**.
+
+Input Format: The first line contains 2 space separated integers **N** and **K**
+
+The next line contains **N** space separated integral elements of the list.
+Sample Input: 9 3
+9 4 1 7 8 3 2 6 5
+Output Format: Display the linkedlist after reversing every k elements
+Sample Output: 1 4 9 3 8 7 5 6 2
+
+
+********************************************************************************************************************************************************************
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+    int data ;
+    node*next ;
+    node(int d){
+        next = NULL ;
+        data = d ;
+    }
+};
+
+void insertAtHead(node* &head , int d){
+    if (head == NULL)
+    {
+        head = new node(d) ;    
+        return ;  
+    }
+    node*n = new node(d) ;
+    n->next=head ;
+    head = n ;
+}
+
+void insertAtTail(node* &head , int d){
+    if (head == NULL)
+    {
+        head = new node(d) ;                    
+        return ;    
+    }
+    node* tail = head ;
+    while (tail->next != NULL)
+    {
+        tail = tail->next ;
+    }
+    tail->next = new node(d) ;
+}
+
+int length(node* head ){
+    int count = 0 ;
+    while (head != NULL)
+    {
+        count++ ;
+        head = head->next ;
+    }
+    return count ;
+    
+}
+
+void insertAtMiddle(node* &head , int d , int p){
+    if (head == NULL || p == 0)
+    {
+        insertAtHead(head , d) ;
+        return ;
+    }
+    else if (p >(length(head)))
+    {
+        insertAtTail(head , d ) ;
+    }
+    else{
+        int jump = 1 ;
+        node*temp = head ;
+        while (jump <= p-1)
+        {   
+            temp = temp->next ;
+            jump++ ;
+        }
+        node*n = new node(d) ;
+        n->next = temp->next ;
+        temp->next = n ;  
+
+    }
+    
+    
+}
+
+void deleteHead(node* &head){
+    if (head == NULL)
+    {
+        return ;
+    }
+    node* temp = head->next ;
+    delete head ;
+    head = temp ;
+    
+}
+
+void deleteTail(node* &head){
+    if (head == NULL)
+    {
+        return ;
+    }
+    node* temp = head ;
+    node* previousElement = head ;
+    while (temp ->next != NULL)
+    {   previousElement = temp ;
+        temp = temp->next ;
+    }
+    
+    delete temp ;
+    previousElement->next = NULL ;
+
+}
+
+void deleteMiddle(node* &head , int p){
+    if (head == NULL)
+    {
+        return ;
+    }
+    if (p > length(head))
+    {
+        deleteTail(head) ;
+    }
+    int jump = 1 ;
+    node*temp = head ;
+    node*previousElement = NULL ;
+    while (jump <= p-1){
+            previousElement = temp ;
+            temp = temp->next ;
+            jump++ ;
+     }
+    previousElement->next = temp->next ;
+    delete temp ;
+}
+
+bool searchElement(node* head , int key){
+    while (head != NULL)
+    {
+        if (head->data == key)
+        {
+            return true ;
+        }
+        head = head->next ;
+    }
+    return false ;
+}
+
+void print(node* head){
+    while (head != NULL)
+    {
+        cout<<head->data<<" -> " ;
+        head = head->next ;
+    }
+    cout<<endl ;
+}
+
+void reverseLinkedList(node* &head){
+    node* c = head ;
+    node* N  ;
+    node* P = NULL ;
+    while (c!= NULL)
+    {
+        N = c->next ;
+        c->next = P ;
+        P = c ;
+        c = N ;
+    }
+    head = P ;
+}
+
+node* findKthreverse(node* head , int k){
+    node* c = head ;
+    node* N  ;
+    node* P = NULL ;
+    int count = 0 ;
+    while (c!= NULL and count<k)
+    {
+        N = c->next ;
+        c->next = P ;
+        P = c ;
+        c = N ;
+        count++ ;
+    }
+    if (N != NULL)
+    {
+        head->next = findKthreverse(N , k) ;
+    }
+    return P ;
+    
+}
+
+node* take_input(){
+    int d ; 
+    cin>>d ;
+    node* head = NULL ;
+    while (d != -1)
+    {
+        insertAtHead(head , d) ;
+        cin>>d ;
+    }
+    return head ;
+}
+
+int main(){
+    node* head = take_input() ;
+    print(head) ;
+    int k = 3 ;
+    node* head2 = findKthreverse(head , k) ;
+    print(head2) ;
+    return 0;
+}

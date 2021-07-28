@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+#include<math.h>
+#include <bits/stdc++.h>
+
+int stringConverter(char str[] , int n , int start = 0){
+    if(str[start]== '\0'){
+        return 0 ;
+    }
+    int cal = (int)str[start];
+    int cal2 = cal - 48 ;
+    return pow(10 , n-1)*(cal2) + stringConverter(str , n-1 , start+1) ;
+}
+
+int main()
+{
+    char str[20] ;
+    cin.getline(str,20) ;
+    int size = strlen(str) ;
+    int output = stringConverter(str , size) ;
+    cout<<output ;
+    return 0 ;
+}

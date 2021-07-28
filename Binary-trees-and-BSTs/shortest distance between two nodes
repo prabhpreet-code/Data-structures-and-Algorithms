@@ -1,0 +1,112 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include<queue>
+#include<math.h>
+using namespace std;
+
+//Structure of a single node
+class node{
+    public:
+    int data ;
+    node*right ;
+    node*left ;
+    node(int d){
+        data = d ;
+        right = NULL ;
+        left = NULL ;
+    }
+};
+
+class Pair{
+    public:
+    
+    bool check; // check balanced or not
+    int height ; // calculate the height of a node
+};
+
+// Function to make a tree
+node* buildTree(){
+    int d ; 
+    cin>>d ;
+    if (d == -1)
+    {
+        return NULL ;
+    }
+    node* root = new node(d) ;
+    root->left = buildTree() ;
+    root->right = buildTree() ;
+    return root ;
+    
+}
+
+// find lowest common ancestor
+//assumptions :- that a and b are present inside tree
+node* lca(node* root , int a ,int b){
+    // base case
+    if (root ==NULL)
+    {
+        return NULL ;
+    }
+    //check if a or b is found return the root
+    if (root->data == a or root->data == b)
+    {
+        return root ;
+    }
+    // recursive case
+    node* left = lca(root->left , a , b) ;
+    node* right = lca(root->right , a , b) ;
+    // we have got a and b from left and right both so return ancestor node
+    if (left != NULL and right!=NULL)
+    {
+        return root ;
+    }
+    // we got a or b from left but null from right so return left
+    if (left!=NULL)
+    {
+        return left ;
+    }
+    //or at last we got it from right
+     return right ;
+    
+}
+
+//find out the distance of ancestar node to the given nodes 
+int search(node* root , int a , int level){
+    if (root == NULL)
+    {
+        return -1 ;
+    }
+    if (root->data == a)
+    {
+        return level ;
+    }
+    //search in left part
+    int leftLevel = search(root->left , a , level+1) ;
+    //if found return its distance
+    if (leftLevel!= -1)
+    {
+        return leftLevel ;
+    }
+    //if not found in left , search in right
+    return search(root->right , a , level+1) ;
+    
+}
+
+// function to print shortest distance
+void shortestDistBetweenNodes(node* root , int a , int b ){
+    // lowest common ancestar
+    node* temp = lca(root , a ,b) ;
+    //find given nodes distance from lca
+    int p1 = search(temp , a , 0) ;
+    int p2 = search(temp , b , 0) ;
+    cout<<p1+p2<<" " ;
+}
+
+int main(){
+   node* root = buildTree() ;
+   int a= 1 , b= 7 ;
+   shortestDistBetweenNodes(root , a , b) ;
+   //cout<<search(root , b , 0) ;
+    return 0;
+
+}

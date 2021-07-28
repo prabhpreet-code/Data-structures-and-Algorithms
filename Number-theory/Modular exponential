@@ -1,0 +1,40 @@
+Problem Name: Modular Exponentiation
+Problem Difficulty: None
+Problem Constraints: 1<=a,b,c<=100000
+Problem Description:
+Given three numbers a,b,c. Calculate (a^b)mod c.
+
+Input Format: Single line containing three integers a,b,c separated by space.
+Sample Input: 2 2 3
+Output Format: Print (a^b)mod c.
+Sample Output: 1
+
+***************************************************************************************************************************************************************
+
+#include <iostream>
+using namespace std;
+typedef long long int ll;
+
+int mod_exponential(int a , int b , int c){
+  int res= 1 ;
+  while(b>0){  
+    if (b&1)
+    {
+        res=a*res ;
+    }
+    a=a*a ;
+    b=b>>1 ;
+  }
+    return (res)%c ;
+    
+}
+
+int main()
+{   int a ,b , c ;
+    cout<<"Enter the numbers:"<<endl ;
+    cin>>a>>b>>c ;
+    int ans = mod_exponential(a , b , c) ;
+
+    cout << ans << endl;
+    return 0;
+}

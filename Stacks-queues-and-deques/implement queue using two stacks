@@ -1,0 +1,86 @@
+#include<iostream>
+#include<bits/stdc++.h>
+#include<stack>
+
+using namespace std;
+
+template<typename T> 
+class Queue{
+    stack<int> q1 ;
+    stack<int> q2 ;
+    public:
+    
+    void push(int d){
+        q1.push(d) ;
+    }
+
+    int top(){
+        if (!q1.empty())
+        {
+              while (q1.size() > 1)
+        {
+            int element = q1.top() ;
+            q2.push(element) ;
+            q1.pop() ;
+        }
+        int element = q1.top() ;
+            q2.push(element) ;
+            q1.pop() ;
+           while (!q2.empty())
+        {
+            int element = q2.top() ;
+            q1.push(element) ;
+            q2.pop() ;
+        }
+            
+            return element ;
+            
+        }
+        return -1 ;
+    }
+
+    void pop(){
+         if (!q1.empty())
+        {
+              while (q1.size() > 1)
+        {
+            int element = q1.top() ;
+            q2.push(element) ;
+            q1.pop() ;
+        }
+        
+           q1.pop() ;
+           while (!q2.empty())
+        {
+            int element = q2.top() ;
+            q1.push(element) ;
+            q2.pop() ;
+        }
+            
+            
+        }
+        
+    }
+    int sizeofstack(){
+        return q1.size()+q2.size() ;
+    }
+    bool emptyReturn(){
+        return sizeofstack() == 0 ;
+    }
+};
+
+int main(){ 
+        Queue<int> q ;    
+        q.push(1) ;
+        q.push(2) ;
+        q.push(3) ;
+        q.push(4) ;
+        while(!q.emptyReturn())
+        {  
+            cout<<q.top()<<endl ;
+            q.pop() ; 
+        }
+        
+         
+    return 0;
+}

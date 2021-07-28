@@ -1,0 +1,83 @@
+Problem Name: Top k most frequent number in a stream
+Problem Difficulty: None
+Problem Constraints: 1 < t < 100
+1< n < 100000
+Problem Description:
+Given an array of n numbers. Your task is to read numbers from the array and keep at-most K numbers at the top (according to their decreasing frequency) every time a new number is read. We basically need to print top k numbers sorted by frequency when input stream has included k distinct elements, else need to print all distinct elements sorted by frequency. If frequency of two numbers are same then print them in increasing order.
+
+Input Format: First line contains integer t as number of test cases.
+Each test case contains following input. First line contains integer n and k, n represents the length of the array and next line contains n space separated integers.
+
+Sample Input: 1
+5 2
+5 1 3 5 2
+Output Format: Print top k running stream.
+
+Sample Output: 5 1 5 1 3 5 1 5 1
+
+*****************************************************************************************************************************************************************
+
+sample output -- 5 25 125 1235 1234
+#include <iostream>
+#include<string>
+#include<queue>
+
+using namespace std;
+//typedef pair<int , pair<int , int>> pairOfCount ;
+
+int main()
+{   
+    int help[100]={0} ; //to count number of elements in an array
+    int arr[] = {5,2,1,3,4};
+    int k = 4 ; // numbers to print
+    int count = 0 ;// to have number of elements in heap at present
+    priority_queue<int,vector<int>,greater<int>> pq ;// min heap
+    for (int i = 0; i < 5; i++) // for total number of elements
+    {   k = 4 ;
+        count = 0 ;
+        help[arr[i]]++ ;//increase by one and maintain the count of diff elements
+        pq.push(arr[i]) ;//push in the number in heap
+        //check in if element is not repeated
+        if (help[arr[i]] == 1)
+        {   //print in all the top kth numbers in heap
+            while (k > 0)
+            {  if (!pq.empty())
+            {
+                cout<<pq.top()<<" " ;
+                pq.pop() ;
+                count++ ;
+            }
+                k-- ;
+
+            }
+            // again put in all the popped elements into the heap
+            for (int j = 0; j < count; j++)
+            {
+                pq.push(arr[j]) ;
+            }
+            
+        }
+        // if repeated
+        else{
+            cout<<arr[i]<<" " ;//print present element 
+            while (k > 1)//print whole heap as such
+            {  if (!pq.empty())
+            {
+                cout<<pq.top()<<" " ;
+                pq.pop() ;
+                count++ ;
+            }
+                k-- ;
+
+            }
+            for (int j = 0; j < count; j++)
+            {
+                pq.push(arr[j]) ;
+            }
+        }
+        
+    }
+    
+    
+    return 0;
+}

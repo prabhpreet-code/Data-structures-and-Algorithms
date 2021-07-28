@@ -1,0 +1,67 @@
+#include<iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+class Queue{
+    int* arr ;
+    int f , ms , cs , r ;
+    public:
+    Queue(int ds=6 ){
+        arr = new int[ds] ;
+        f = 0 ;
+        ms= ds ;
+        r = ds -1 ;
+        cs = 0 ;
+    }
+    ~Queue(){
+        if (arr != NULL)
+        {
+            delete []arr ;
+            arr = NULL ;
+        }
+    }
+    bool checkLimit(){
+        return cs==ms ;
+    }
+    void push(int d){
+       if(!checkLimit()){ 
+        r= (r+1)%ms ;
+        arr[r] = d ;
+        cs++ ;
+       }
+    }
+
+    bool empty(){
+        return cs ==0 ;
+    }
+    void pop(){
+       if(!empty()){ 
+        f= (f+1)%ms ;
+        cs-- ;
+       }
+    }
+    int front(){
+        return arr[f] ;
+    }
+
+
+};
+
+int main(){ 
+    Queue q ;
+    for (int i = 0; i < 5; i++)
+    {
+        q.push(i) ;
+    }
+    q.pop() ;
+    q.pop() ;
+    q.push(7) ;
+    while (!q.empty())
+    {
+        cout<<q.front()<<endl ;
+        q.pop() ;
+    }
+         
+    return 0;
+}

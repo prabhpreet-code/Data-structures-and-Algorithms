@@ -1,0 +1,144 @@
+Problem Name: Find sum at level K
+Problem Difficulty: None
+Problem Constraints: 1 <= Nodes in tree <=1000<br>1<K<10
+Problem Description:
+Take input of a generic tree using buildtree() function and also take input K the level at which we need to find the sum.
+
+Input Format: Take a generic tree input where you are first given the data of the node and then its no of children. The input is of preorder form and it is assured that the no of children will not exceed 2.
+The input of the tree is followed by a single integer K.
+Sample Input: 1 2
+2 2
+3 0
+4 0
+5 2
+6 0
+7 0
+2
+Output Format: A single line containing the sum at level K.
+Sample Output: 20
+
+**********************************************************************************************************************************************************************
+#include <iostream>
+#include<vector>
+#include <bits/stdc++.h>
+using namespace std;
+
+//Structure of a single node
+class node{
+    public:
+    int data ;
+    node*right ;
+    node*left ;
+    node(int d){
+        data = d ;
+        right = NULL ;
+        left = NULL ;
+    }
+};
+// a vector to store pairs of level and sum of that level
+vector<pair<int,int>> v ;
+// breadth first search -- to print the tree in o(N) complexity
+void bfs(node* root){
+    int sum= 0;
+    static int i = 0 ;
+    queue<node*> q ;
+    q.push(root) ;
+    q.push(NULL) ;
+    while (!q.empty())
+    {
+        node* f = q.front() ;
+        if (f == NULL)
+        {   //whenever null arises increase the i to next level and let sum be 0
+            i++ ;
+            sum = 0 ;
+            cout<<endl ;
+            q.pop() ;
+            if (!q.empty())
+            {
+                q.push(NULL) ;
+            }
+        }
+        else{
+            sum += f->data ;
+            v.push_back(make_pair(i,sum));
+            cout<<f->data<<" " ;
+            q.pop() ;
+         if (f->left)
+            {
+                q.push(f->left) ;
+            }
+            if (f->right)
+            {
+             q.push(f->right) ;
+            }
+        }
+    }
+    return ;
+}
+// Function to make a tree
+node* buildTree(){
+    int x, y ; 
+    cin>>x>>y ;
+    pair<int ,int> d = make_pair(x , y);
+
+    if (d.second == 0)
+    {   node* root = new node(d.first) ;
+        root->left = NULL ;
+        root->right = NULL ;
+        return root ;
+    }
+    if (d.second == 2)
+    {
+        node* root = new node(d.first) ;
+        root->left = buildTree() ;
+        root->right = buildTree() ;
+        return root ;    
+    }
+    
+    
+}
+
+//count total number of nodes
+int countNodes(node* root){
+    if (root== NULL)
+    {
+        return 0 ;
+    }
+
+    return 1+countNodes(root->left)+countNodes(root->right) ;   
+}
+
+void preOrderPrint(node* root){
+    if (root == NULL)
+    {
+        return ;
+    }
+    //left->root->right
+    //recursive
+    cout<<root->data<<"," ;
+    preOrderPrint(root->left);
+    preOrderPrint(root->right) ;
+    
+}
+
+int main(){
+   node* root = buildTree() ;
+   preOrderPrint(root) ;
+   cout<<endl ; 
+   bfs(root) ;
+   for (vector<pair<int,int>> ::iterator itr = v.begin() ; itr != v.end() ; itr++)
+   {
+       cout<<(*itr).first<<","<<(*itr).second<<endl;
+   }
+   int key = 2 ;
+    for (vector<pair<int,int>> ::iterator itr = v.end() ; itr != v.begin() ; itr--)
+   {  if((*itr).first == key){  
+       cout<<(*itr).first<<","<<(*itr).second<<endl;
+       break ;
+     }
+   }
+   
+ 
+
+    return 0;
+}

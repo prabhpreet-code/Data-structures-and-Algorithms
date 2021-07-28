@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int a = 0 ; 
+void integer(int y){
+    if(a++ != y){
+        cout<<a<<" " ;
+        integer(y) ;
+    }
+    else {
+        return ;
+    }
+}
+
+int main(){
+    
+    int x ;
+    cout<<" Enter the integer :"<<endl ;
+    cin>> x ;    
+    integer(x) ;
+    return 0 ;
+}

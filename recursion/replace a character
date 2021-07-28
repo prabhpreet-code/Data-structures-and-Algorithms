@@ -1,0 +1,28 @@
+#include<iostream>
+#include<bits/stdc++.h>
+
+using namespace std ;
+
+void stringRemover(char str[] ,char c1 ,char c2){
+    if(str[0] == '\0'){
+        return ;
+    }
+
+    if(str[0] != c1){
+        stringRemover(str +1 , c1 , c2);
+    }
+    else{
+        int size = strlen(str) ;
+        int i ;
+        str[0] = c2;
+        stringRemover(str+1 , c1 ,c2) ;
+    }
+}
+
+ int main(){
+     char str[20] , c1 = 'a' , c2 = 'b' ;
+     cout<<"Enter the string "<<endl ;
+     cin>>str ;
+     stringRemover(str , c1 , c2) ;
+     cout<< str ;
+}

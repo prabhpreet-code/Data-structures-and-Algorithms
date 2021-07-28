@@ -1,0 +1,43 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+
+class Students{
+    public:
+    string name ;
+    int marks ;
+};
+
+vector<Students> v[101] ;
+
+void bucket_sort(Students s[] , int n ){
+    for (int i = 0; i < n; i++)
+    {
+        int m = s[i].marks ;
+        v[m].push_back(s[i]) ;
+    }
+    
+    for (int i = 100; i >= 0; i--)
+    {
+        for ( vector<Students>::iterator itr = v[i].begin() ; itr != v[i].end() ; itr++)
+        {
+            cout<<(*itr).name<<" "<<(*itr).marks<<endl  ;
+        }
+        
+    }
+    
+}
+
+int main(){
+    int  n ;
+    cin>> n ;
+    Students s[1000] ;
+    for (int i = 0; i < n; i++)
+    {
+        cin>>s[i].name>>s[i].marks ;
+    }
+    
+    bucket_sort(s , n) ;
+
+    return 0;
+}
