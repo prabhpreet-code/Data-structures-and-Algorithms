@@ -1,0 +1,222 @@
+#include<iostream>
+#include<cstring>
+// #include "hashtable.h"
+using namespace std ;
+
+template<typename T>//unknown type of value 
+
+//to define structure of each node
+class Node{
+  public :
+  string key ;
+  T value ;
+  Node<T>* next ;//to save next node's address --linkedlist
+
+//constructor
+  Node(string key , T val){
+    this->key = key ;
+    value = val ;
+    next = NULL;
+  }
+
+//destructor
+//to release the memory as if directly we break the link between linkedlist, memory leak could be possible
+  ~Node(){
+    if (next != NULL)
+    {
+      delete next ;
+    }
+  }
+};
+
+//structure of hashtable
+template<typename T>
+class Hashmap{
+  Node<T>** table;//table to contain addresses of all the nodes
+  int current_size ;
+  int table_size ;
+
+//to convert key into int as to save at part. index
+  int hash_func(string key){
+    int idx = 0 ;
+    int p = 1;
+    // (a*b*c)%m = ((a%m)*(b%m)*(c%m))%m
+    //a*b*c at higher values could lead to memory overflow which could result into undesired result
+    //abc -- a*27+b*(27^2)+....
+    for (int j = 0; j < key.length(); j++)
+    {
+      idx = idx + (key[j]*p)%table_size ;
+      idx = idx%table_size ;
+      p = (p*27)%table_size ;
+    }
+    return idx ;
+    
+  }
+
+//to avoid collisions load factor and rehash are used
+  void rehash(){
+    Node<T>** old_table = table ;//store old's table details
+    int old_table_size= table_size ;//old size
+    table_size=2*table_size ;//approximation find the next prime number
+    table = new Node<T>*[table_size] ;//new table with double size
+    for (int i = 0; i < table_size; i++)
+    {
+      table[i] = NULL ;
+    }
+
+    //shift elements from old table to new table
+    current_size = 0 ;
+    for (int j = 0; j < old_table_size; j++)
+    {
+      Node<T>* temp = old_table[j] ;
+      while (temp!=NULL)
+      {
+        insert(temp->key , temp->value) ;
+        temp = temp->next ;
+      }
+    //recursive destructor
+      if (old_table[j]!=NULL)
+      { 
+        delete old_table[j];
+      }  
+    }
+    delete [] old_table ;
+    
+  }
+  public:
+  //constructor
+  Hashmap(int ts = 7){
+    table_size = ts ;
+    table = new Node<T>*[table_size] ;
+    current_size=0;
+    //assigning every table component as NULL
+    for (int i = 0; i < table_size; i++)
+    {
+      table[i] = NULL ;
+    }
+  }
+
+//insert key,value pairs 
+  void insert(string key , T value){
+    int idx = hash_func(key) ;
+    Node<T>* n = new Node<T>(key , value) ;
+    //insert at head of the linkedlist everytime
+    n->next = table[idx] ;
+    table[idx] = n ;
+    current_size++ ;
+    //if lf>0.7 means current elements are more and thus chances are also more of collision 
+    //apply rehash to avoid this
+    float lf = current_size/(1.0*table_size);
+    if (lf > 0.7)
+    {
+      rehash();
+    }
+    
+  }
+
+//printing of hashtable
+  void print(){
+    for (int i = 0; i < table_size; i++)
+    {
+      cout<<"Bucket "<<i<<"->" ;
+
+      Node<T>* temp = table[i] ;
+      while (temp!= NULL)
+      { cout<<temp->key<<"->"<<temp->value<<"->" ;
+        temp = temp->next ;
+      }
+      cout<<endl;
+    }
+  }
+
+//search its presence and return address
+  T* search(string key){
+    int idx = hash_func(key) ;//position in hashtable
+    Node<T>* temp = table[idx] ;
+    while (temp!=NULL)
+    {
+      if (temp->key == key)
+      {
+        return &(temp->value) ;
+      }
+      temp=temp->next ;
+    }
+    return NULL ;
+  }
+
+//delete the entry
+  void erase(string key){
+    int idx = hash_func(key) ;
+    Node<T>* temp = table[idx] ;//current
+    Node<T>* prev = NULL ;//prev
+    while (temp!=NULL)
+    {
+      if (temp->key == key)
+      {
+        //if previous is not NULL
+        if (prev)
+        {
+          prev->next = temp->next ;
+        }
+
+        else{
+          table[idx] = temp->next ;
+        }
+        // temp->next = NULL ;
+        delete temp ;
+      }
+      prev = temp ;
+      temp= temp->next ;
+    }
+  }
+
+//operator overloading eg:hashmap["string"] = value ;
+  T& operator[](string key){
+    T* f = search(key) ;
+    if (f == NULL)
+    {
+      T garbage ;
+      insert(key ,garbage) ;
+      f = search(key) ;
+    }
+    return *f ;
+  }
+
+  // T& operator +(string key){
+  //   T* f = search(key) ;
+  //   if (f == NULL)
+  //   {
+  //     T garbage ;
+  //     insert(key ,garbage) ;
+  //     f = search(key) ;
+  //   }
+  //   return *f ;
+  // }
+};
+
+int main(){
+  Hashmap<int> price_menu ;
+  price_menu.insert("Burger" , 100) ;
+  price_menu.insert("Pepsi" , 120) ;
+  price_menu.insert("BurgerPizza" , 100) ;
+  price_menu.insert("Noodles" , 10) ;
+  price_menu.insert("Coke" , 100) ;
+
+  price_menu.print() ;
+
+  if (price_menu.search("Noodles") != NULL)
+  {
+    cout<<"yepp its present and its value is"<<price_menu.search("Noodles") ;
+  }
+
+  else{
+    cout<<"sorry its not present ";
+  }
+  // price_menu.erase("Coke") ;
+  price_menu["Noodles"] = 200 ;
+  price_menu.print() ;
+
+  price_menu["Noodles"] += 20 ;
+  price_menu.print() ;
+
+}
